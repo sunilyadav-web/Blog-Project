@@ -3,6 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from froala_editor.fields import FroalaField
 from .helpers import *
+
+class Profile(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    is_varified=models.BooleanField(default=False)
+    token=models.CharField(max_length=100)
+
 class BlogModel(models.Model):
     title=models.CharField(max_length=1000)    
     content=FroalaField()

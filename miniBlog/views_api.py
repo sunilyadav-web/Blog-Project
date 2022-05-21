@@ -2,6 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
+from .models import Profile
+from .helpers import *
 
 class LoginView(APIView):
     
@@ -59,6 +61,18 @@ class RegisterView(APIView):
                 response['message']='Key username is not none'       
                 raise Exception('Key username is not None')
 
+            if data.get('fname') is None:
+                response['message']='Key First name not None'
+                raise Exception('Key First name not None')
+
+            if data.get('lname') is None:
+                response['message']='Key Last not None'
+                raise Exception('Key Last name is not None')
+
+            if data.get('email') is None:
+                response['message']='Key email not None'
+                raise Exception('Key email is not None')
+                
             if data.get('password') is None:
                 response['message']='Key Password not None'
                 raise Exception('Key Password is not None')
@@ -68,10 +82,21 @@ class RegisterView(APIView):
             if check_user:
                 response['message']='Username Already Taken'
                 raise Exception('Username Already Taken')
+                
+            # if not Profile.objects.filter(user=check_user).first().is_varified:
+            #     response['message']='Your Profile is not verified '
+            #     raise Exception('Profile not verified')
 
-            user_objs=User.objects.create(username=data.get('username'))
-            user_objs.set_password(data.get('password'))
-            user_objs.save()
+            user_obj=User.objects.create(username=data.get('username'))
+            user_obj.set_password(data.get('password'))
+            user_obj.first_name=data.get('fname')
+            user_obj.last_name=data.get('lname')
+            user_obj.email=data.get('email')
+            
+            user_obj.save()
+            token=generate_random_string(20)
+            Profile.objects.create(user=user_obj,token=token)
+            send_mail_to_user(token,data.get('email'))
             response['message'] = 'User Created'
             response['status'] = 200
             

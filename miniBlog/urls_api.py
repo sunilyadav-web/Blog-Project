@@ -3,5 +3,5 @@ from .views_api import *
 
 urlpatterns = [
     path('login',LoginView),
-    path('signup',RegisterView),
+    path('register',RegisterView),
 ]

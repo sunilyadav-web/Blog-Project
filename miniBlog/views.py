@@ -10,12 +10,26 @@ def home(request):
 def signin(request):
     return render(request,'blog/login.html')
 
-def signup(request):
+def register(request):
     return render(request,'blog/register.html')
+
+def verify(request, token):
+    try:
+        profile_obj=Profile.objects.filter(token=token).first()
+
+        if profile_obj:
+            profile_obj.is_varified=True
+            profile_obj.save()
+        return redirect(signin)
+    except Exception as e:
+        print(e)
 
 def signout(request):
     logout(request)
     return redirect(home)
+
+def profile(request):
+    return render(request,'blog/profile.html')
 
 def addBlog(request):
     context={'form':BlogForm}

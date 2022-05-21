@@ -5,11 +5,13 @@ from froala_editor import views
 urlpatterns = [
     path('',home,name='home'),
     path('login',signin,name='login'),
-    path('signup',signup,name='signup'),
+    path('signup',register,name='register'),
     path('logout',signout,name='signout'),
     path('add-blog',addBlog,name='addblog'),
     path('blog-detail<slug>',blogDetail,name='blog_detail'),
     path('see-blogs',seeBlogs,name='seeblogs'),
     path('update-blog<slug>',updateBlog,name='updateblog'),
     path('delete-blog<slug>',deleteBlog,name='deleteblog'),
+    path('verify<token>',verify,name='verify'),
+    path('profile',profile,name='profile'),
 ]
