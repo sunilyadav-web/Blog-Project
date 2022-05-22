@@ -12,6 +12,6 @@ urlpatterns = [
     path('see-blogs',seeBlogs,name='seeblogs'),
     path('update-blog<slug>',updateBlog,name='updateblog'),
     path('delete-blog<slug>',deleteBlog,name='deleteblog'),
-    path('verify<token>',verify,name='verify'),
+    path('verify/<token>',verify,name='verify'),
     path('profile',profile,name='profile'),
 ]

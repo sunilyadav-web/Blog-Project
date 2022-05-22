@@ -8,6 +8,8 @@ class Profile(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     is_varified=models.BooleanField(default=False)
     token=models.CharField(max_length=100)
+    def __str__(self):
+        return self.user.first_name
 
 class BlogModel(models.Model):
     title=models.CharField(max_length=1000)    

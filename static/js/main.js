@@ -25,6 +25,9 @@ function login()
         if(response.status == 200){
             window.location.href='/'
         }
+        if(response.status ==500){
+            alert(response.message)
+        }
     })
 
 }
@@ -59,9 +62,15 @@ function register()
     }).then(result=>result.json())
     .then(response=>{
         console.log(response)
-        // if(response.status == 200){
-        //     window.location.href='/'
-        // }
+        if(response.status == 200){
+            // window.location.href='/'
+            alert(response.message)
+            username.value=''
+            fname.value=''
+            lname.value=''
+            email.value=''
+            password.value=''
+        }
     })
 
     console.log(username)

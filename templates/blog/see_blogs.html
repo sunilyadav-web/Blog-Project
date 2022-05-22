@@ -1,7 +1,7 @@
+
 {% extends './base.html' %}
 
 {% block start %}
-
 <section>
     <div class="container">
         <div class="row">
@@ -18,7 +18,7 @@
                     {% for blog in blog_objs %}
                   <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{blog.title}}</td>
+                    <td><a class="text-dark" href="{% url 'blog_detail' blog.slug %}">{{blog.title}}</a></td>
                     <td>{{blog.created_at}}</td>
                     <td><a href="{% url 'updateblog' blog.slug %}" class="btn btn-primary">Update</a></td>
                     <td><a href="{% url 'deleteblog' blog.slug %}" class="btn btn-danger">Delete</a></td>

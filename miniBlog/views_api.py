@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
+from django.contrib.sites.shortcuts import get_current_site
 from .models import Profile
 from .helpers import *
 
@@ -25,8 +26,8 @@ class LoginView(APIView):
             check_user=User.objects.filter(username=data.get('username')).first()
 
             if check_user is None:
-                response['message']='invalid username not found'
-                raise Exception('invalid username not found')
+                response['message']='Invalid username not found. Please enter a valid username'
+                raise Exception('Invalid username not found. Please enter a valid username')
 
             user_obj=authenticate(username=data.get('username'),password=data.get('password'))
 
@@ -36,8 +37,8 @@ class LoginView(APIView):
                 login(request,user_obj)
 
             else:
-                response['message']='Invalid Password'
-                raise Exception('invalid Password')
+                response['message']='Incorrect password, Please enter a correct password'
+                raise Exception('Incorrect password, Please enter a correct password')
             
         except Exception as e:
             print(e)
@@ -83,20 +84,20 @@ class RegisterView(APIView):
                 response['message']='Username Already Taken'
                 raise Exception('Username Already Taken')
                 
-            # if not Profile.objects.filter(user=check_user).first().is_varified:
-            #     response['message']='Your Profile is not verified '
-            #     raise Exception('Profile not verified')
+            
 
             user_obj=User.objects.create(username=data.get('username'))
             user_obj.set_password(data.get('password'))
             user_obj.first_name=data.get('fname')
             user_obj.last_name=data.get('lname')
             user_obj.email=data.get('email')
-            
             user_obj.save()
+
             token=generate_random_string(20)
             Profile.objects.create(user=user_obj,token=token)
-            send_mail_to_user(token,data.get('email'))
+            email=data.get('email')
+            current_site=get_current_site(request)
+            send_mail_to_user(token,email,current_site.domain)
             response['message'] = 'User Created'
             response['status'] = 200
             

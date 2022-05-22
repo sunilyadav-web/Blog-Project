@@ -44,7 +44,7 @@ def addBlog(request):
                 content=form.cleaned_data['content']
             
             BlogModel.objects.create(user=user, title=title, image=image, content=content)
-            messages.SUCCESS(request,'Your Blog Published successfully!')
+            messages.success(request,'Your Blog Published successfully!')
             context['messages']=messages
             redirect(addBlog)
     except Exception as e :
@@ -72,26 +72,38 @@ def seeBlogs(request):
     return render(request,'blog/see_blogs.html' ,context)
 
 
-def updateBlog(request , slug):
+def updateBlog(request ,slug):
     context={}
     try:
         blog_obj=BlogModel.objects.get(slug=slug)
         if request.user != blog_obj.user:
             return redirect(home)
-
-        initial_dict={'content':blog_obj.content}    
+        b=blog_obj.content
+        initial_dict={'content':b}    
         form=BlogForm(initial=initial_dict)
 
         if request.method== 'POST':
             form=BlogForm(request.POST)
-            image=request.FILES['image']
             title=request.POST['title']
             user=request.user
+            
+                
 
             if form.is_valid():
                 content=form.cleaned_data['content']
-
-            blog_ob=BlogModel.objects.create(user=user,image=image,title=title,content=content)
+            
+            
+            blog=BlogModel.objects.get(slug=slug)
+            blog.user=user
+            blog.title=title
+            blog.content=content
+            
+            if request.FILES.get('image'):
+                blog.image=request.FILES['image']            
+            blog.save()
+            
+            # messages.success(request,'Your Blog upadated successfully!')
+            return redirect(seeBlogs)
             
 
         context['blog_obj'] = blog_obj
@@ -109,6 +121,7 @@ def deleteBlog(request,slug):
         blog=BlogModel.objects.get(slug=slug)
         if request.user == blog.user:
             blog.delete()
+            messages.success(request,'Blog deleted successfully!')
             return redirect(seeBlogs)
         else:
             return redirect(home)    
