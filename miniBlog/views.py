@@ -2,16 +2,31 @@ from django.shortcuts import redirect, render
 from .form import *
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.core.paginator import Paginator
 
 def home(request):
-    context={'blogs':BlogModel.objects.all()}
+    blogs=BlogModel.objects.all()
+    paginator=Paginator(blogs,3 )
+    pages=paginator.page_range
+    pageNumber=request.GET.get('page')
+    finalBlogpage=paginator.get_page(pageNumber)
+    context={'blogs':finalBlogpage,'pages':pages}
+    
     return render(request,'blog/home.html',context)
 
 def signin(request):
-    return render(request,'blog/login.html')
+    if request.user.is_authenticated:
+        messages.error(request,"You already Logged in!")
+        return redirect(home)
+    else:
+        return render(request,'blog/login.html')
 
 def register(request):
-    return render(request,'blog/register.html')
+    if request.user.is_authenticated:
+        messages.error(request,"Please logout then you can Signup!")
+        return redirect(home)
+    else:
+        return render(request,'blog/register.html')
 
 def verify(request, token):
     try:
@@ -25,33 +40,43 @@ def verify(request, token):
         print(e)
 
 def signout(request):
-    logout(request)
-    return redirect(home)
+    if request.user.is_authenticated:
+        logout(request)
+        messages.success(request,'You are logged out successfully!')
+        return redirect(home)
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(signin)
 
 def profile(request):
-    return render(request,'blog/profile.html')
+    if request.user.is_authenticated:
+        return render(request,'blog/profile.html')
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(home)
 
 def addBlog(request):
-    context={'form':BlogForm}
-    try:
-        if request.method == 'POST':
-            form=BlogForm(request.POST)
-            title=request.POST['title']
-            image=request.FILES['image']
-            user=request.user
+    if request.user.is_authenticated:
+        context={'form':BlogForm}
+        try:
+            if request.method == 'POST':
+                form=BlogForm(request.POST)
+                title=request.POST['title']
+                image=request.FILES['image']
+                user=request.user
 
-            if form.is_valid():
-                content=form.cleaned_data['content']
+                if form.is_valid():
+                    content=form.cleaned_data['content']
             
-            BlogModel.objects.create(user=user, title=title, image=image, content=content)
-            messages.success(request,'Your Blog Published successfully!')
-            context['messages']=messages
-            redirect(addBlog)
-    except Exception as e :
-        print(e)
-    
-    
-    return render(request,'blog/add_blog.html',context)
+                BlogModel.objects.create(user=user, title=title, image=image, content=content)
+                messages.success(request,'Your Blog Published successfully!')
+                redirect(addBlog)
+        except Exception as e :
+            print(e)
+        return render(request,'blog/add_blog.html',context)
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(home)
 
 def blogDetail(request,slug):
     context={}
@@ -63,68 +88,97 @@ def blogDetail(request,slug):
     return render(request,'blog/blog_detail.html',context)
 
 def seeBlogs(request):
-    context={}
-    try:
-        blog_objs=BlogModel.objects.filter(user=request.user)
-        context['blog_objs']=blog_objs
-    except Exception as e:
-        print(e)
-    return render(request,'blog/see_blogs.html' ,context)
-
+    if request.user.is_authenticated:
+        context={}
+        try:
+            blog_objs=BlogModel.objects.filter(user=request.user)
+            context['blog_objs']=blog_objs
+        except Exception as e:
+            print(e)
+        return render(request,'blog/see_blogs.html' ,context)
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(home)
 
 def updateBlog(request ,slug):
-    context={}
-    try:
-        blog_obj=BlogModel.objects.get(slug=slug)
-        if request.user != blog_obj.user:
-            return redirect(home)
-        b=blog_obj.content
-        initial_dict={'content':b}    
-        form=BlogForm(initial=initial_dict)
+    if request.user.is_authenticated:
+        context={}
+        try:
+            blog_obj=BlogModel.objects.get(slug=slug)
+            if request.user != blog_obj.user:
+                return redirect(home)
+            b=blog_obj.content
+            initial_dict={'content':b}    
+            form=BlogForm(initial=initial_dict)
 
-        if request.method== 'POST':
-            form=BlogForm(request.POST)
-            title=request.POST['title']
-            user=request.user
-            
-                
+            if request.method== 'POST':
+                form=BlogForm(request.POST)
+                title=request.POST['title']
+                user=request.user
 
-            if form.is_valid():
-                content=form.cleaned_data['content']
-            
-            
-            blog=BlogModel.objects.get(slug=slug)
-            blog.user=user
-            blog.title=title
-            blog.content=content
-            
-            if request.FILES.get('image'):
-                blog.image=request.FILES['image']            
-            blog.save()
-            
-            # messages.success(request,'Your Blog upadated successfully!')
-            return redirect(seeBlogs)
-            
+                if form.is_valid():
+                    content=form.cleaned_data['content']
 
-        context['blog_obj'] = blog_obj
-        context['form'] = form
-
-        
-        
-    except Exception as e:
-        print(e)
-
-    return render(request,'blog/update_blog.html' ,context)
+                blog=BlogModel.objects.get(slug=slug)
+                blog.user=user
+                blog.title=title
+                blog.content=content
+            
+                if request.FILES.get('image'):
+                    blog.image=request.FILES['image']            
+                blog.save()
+            
+                messages.success(request,'Your Blog upadated successfully!')
+                return redirect(seeBlogs)
+            
+            context['blog_obj'] = blog_obj
+            context['form'] = form    
+        except Exception as e:
+            print(e)
+        return render(request,'blog/update_blog.html' ,context)
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(home)
 
 def deleteBlog(request,slug):
+    if request.user.is_authenticated:
+        try:
+            blog=BlogModel.objects.get(slug=slug)
+            if request.user == blog.user:
+                blog.delete()
+                messages.success(request,'Blog deleted successfully!')
+                return redirect(seeBlogs)
+            else:
+                return redirect(home)    
+        except Exception as e:
+            print(e)
+    else:
+        messages.error(request,"Please Login!")
+        return redirect(home) 
+
+
+def search(request):
+    context={}
     try:
-        blog=BlogModel.objects.get(slug=slug)
-        if request.user == blog.user:
-            blog.delete()
-            messages.success(request,'Blog deleted successfully!')
-            return redirect(seeBlogs)
+        query=request.GET['query']
+        if len(query)>78:
+            search_blogs=BlogModel.objects.none()
+            messages.error(request,"You query length has exceeds , Please try less length of query")
         else:
-            return redirect(home)    
+            searchBlogsTitle=BlogModel.objects.filter(title__icontains=query)
+            searchBlogsContent=BlogModel.objects.filter(content__icontains=query)
+            search_blogs=searchBlogsTitle.union(searchBlogsContent )
+            p=Paginator(search_blogs,2)
+            pages=p.page_range
+            pageNumber=request.GET.get('page')
+            finalsearchpages=p.get_page(pageNumber)
+            context['search_blogs']=finalsearchpages
+
+        if search_blogs.count()==0:
+            messages.warning(request,'No search results found. Please refine your query')
+        context['query']=query
+        context['pages']=pages
     except Exception as e:
         print(e)
-    
+        
+    return render(request,'blog/search.html',context)

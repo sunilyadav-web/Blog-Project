@@ -1,4 +1,69 @@
-.home{
-    background-color: green;
-    color: white;
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+/* shadow for navbar */
+.scroll-header {
+    box-shadow: 0 4px 4px hsla(0, 0%, 4%, .3);
 }
+
+.profile-pic {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: rgb(80, 80, 172);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid gray;
+  }
+
+  .profile-avatar {
+    display: block;
+    text-align: center;
+  }
+
+.alert-div{
+    margin-top: 5rem;
+    position: sticky;
+    display: none;
+}
+
+.services__modal {
+    position: fixed;
+    background-color: green;
+    padding: 2rem 1rem;
+    display: grid;
+    place-items: center;
+    transition: .4s;
+
+}
+
+.home{
+    background-image: url(https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+    background-size: cover;
+}
+
+.my-alert{
+    position: relative;
+    margin: auto;
+    animation: alertmove 0.7s ease-in-out;
+    /* opacity: 0; */
+}
+.my-alert div{
+}
+
+@keyframes alertmove {
+        from{top:-50px}
+        to{top:0px}
+}
+
+
+
+
+

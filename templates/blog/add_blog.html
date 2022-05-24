@@ -10,15 +10,16 @@
         {% csrf_token %}
 
         <div class='row mt-5 mb-5'>
-            <div class="col-md-12">
-                <label >Enter Blog Title</label>
-                <input type="text" class="form-control" placeholder="Enter Title" name="title">
+            <div class="col-md-12 mb-3">
+                <label class="mb-1 ms-1">Enter Blog Title</label>
+                
+                <textarea name="title" id="" cols="30" rows="2" class="form-control" placeholder="Type something" name="title"></textarea>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 mb-3 ">
                 {{form.media}}
                 {{form.as_p}}
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 mb-3">
                 <input type="file" name="image" class="form-control" >
             </div>
             <button type="submit" class="btn btn-primary mt-2">Create Blog</button>

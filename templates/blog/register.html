@@ -1,15 +1,23 @@
 {% extends './base.html' %}
 
 {% block start %}
+<div class="my-alert ">
+  <div class="alert alert-danger  alert-dismissible fade show shadow d-none" id="alert" role="alert">
+  <strong>Message : </strong><span id="message"></span>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="container-fluid px-3">
+  
+  </div>
       <div class="row min-vh-100">
         <div class="col-md-8 col-lg-6 col-xl-5 d-flex align-items-center">
           <div class="w-100 py-5 px-md-5 px-xl-6 position-relative">
            
             <div>
               <div class="form-group">
-                <label class="form-label" for="loginUsername"> Username</label>
-                <input class="form-control" name="loginUsername" id="loginUsername" type="text" placeholder="Choose unique username" autocomplete="off" required data-msg="Choose unique username">
+                <label class="form-label" for="registerUsername"> Username</label>
+                <input class="form-control" name="registerUsername" id="registerUsername" type="text" placeholder="Choose unique username" autocomplete="off" required data-msg="Choose unique username">
               </div>
               <div class="form-group mb-3">
                 <label class="form-label" for="fname">First Name</label>
@@ -26,14 +34,14 @@
               <div class="form-group mb-4">
                 <div class="row">
                   <div class="col">
-                    <label class="form-label" for="loginPassword"> Password</label>
+                    <label class="form-label" for="registerPassword"> Password</label>
                   </div>
                 </div>
-                <input class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
+                <input class="form-control" name="registerPassword"  id="registerPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
               </div>
              
               <!-- Submit-->
-              <button class="btn btn-lg btn-block btn-primary" onclick="register()">Sign in</button>
+              <button class="btn btn-lg btn-block btn-primary" onclick="register()" >Sign in</button>
              
               <p class="text-center"><small class="text-muted text-center">Already have account ?<a href="{% url 'login' %}">Login</a></small></p>
             </div>

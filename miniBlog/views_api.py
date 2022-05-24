@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.contrib.sites.shortcuts import get_current_site
 from .models import Profile
+from django.contrib import messages
 from .helpers import *
 
 class LoginView(APIView):
@@ -35,7 +36,7 @@ class LoginView(APIView):
                 response['status']=200
                 response['message']='Welcome'
                 login(request,user_obj)
-
+                messages.success(request,'You are logged in successfully!')
             else:
                 response['message']='Incorrect password, Please enter a correct password'
                 raise Exception('Incorrect password, Please enter a correct password')
@@ -98,7 +99,7 @@ class RegisterView(APIView):
             email=data.get('email')
             current_site=get_current_site(request)
             send_mail_to_user(token,email,current_site.domain)
-            response['message'] = 'User Created'
+            response['message'] = 'User Created sucessfully! Please check your email in order to activate your account'
             response['status'] = 200
             
         except Exception as e:
