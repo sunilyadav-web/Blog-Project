@@ -4,17 +4,59 @@
 
 <section class="my-5">
     <div class="profile-div">
-        <h4 class="text-center">Edit Profile</h4>
+        <!-- <h4 class="text-center">Edit Profile</h4> -->
     </div>
-    <div class="profile-pic text-center mt-2">
-        <div class="image text-center">
-            <img src="https://source.unsplash.com/500x700/?coding" alt="" class="profile-avatar">
+    <div class="profile w-50 m-auto bg-light p-4 rounded w-sm-50">
+        <div class="profile-pic text-center mt-2">
+            <div class="image text-center ">
+                <img src="../../static/img/user.png" alt="profile image" class="profile-avatar">
+                <button  class="avatar-change " data-bs-toggle="modal" data-bs-target="#profileModal">Edit</button>
+            </div>
+        </div>
+        <div class="info text-center mt-4 mb-3 ">
+            <h4>Sunil Yadav</h4>
+            <p>sunilcodeblog/code.com</p>
+        </div>
+        <div class="bio ">
+            <h5>Bio</h5>
+            <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, fugiat nihil consectetur ea, debitis id quo facere alias veniam eum dolor tempore vel dicta quaerat amet temporibus distinctio, excepturi quibusdam. Numquam ratione aspernatur blanditiis aliquam eligendi doloribus nesciunt soluta! Iste?</p>
+        </div>
+        <div class="blogs ">
+            <h5 class="text-center btn bg-warning w-100 mb-5">POSTS</h5>
+            <div class="posts container-fluid">
+                <div class="row">
+                <div class="col-12 col-sm-5">
+                    <div class="card"><a href="">
+                        <img class="card-img-top" src="http://gravatar.com/avatar/288ce55a011c709f4e17aef7e3c86c64?s=200" alt="..." style="object-fit:cover ; aspect-ratio: 16/ 9;" /></a>
+                      <div class="px-2">
+                        <span class="d-block"><a class="text-dark text-decoration-none" href="">This is testing blog </a></span>
+                        <small class="text-gray-500">12-05-12</small>
+                      </div>
+                    </div>
+                </div>
+                  </div>
+            </div>
         </div>
     </div>
-    <div class="info">
-        <h5><strong>Name </strong>Sunil</h5>
-    </div>
 </section>
+ 
+<!-- Pfile avatar Modal -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Change Profile Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <input type="file" name="profile-image" class="form-control">
+            <div class="mt-2 float-end">
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 
-
-{% endblock  %}
+{% endblock %}
