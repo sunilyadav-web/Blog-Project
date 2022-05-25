@@ -163,19 +163,26 @@ def search(request):
         query=request.GET['query']
         if len(query)>78:
             search_blogs=BlogModel.objects.none()
+            context['search_blogs']=search_blogs
             messages.error(request,"You query length has exceeds , Please try less length of query")
+        elif len(query)==0:    
+            search_blogs=BlogModel.objects.none()
+            context['search_blogs']=search_blogs
+            messages.warning(request,"You didn't pass any query. Please enter your query")
         else:
             searchBlogsTitle=BlogModel.objects.filter(title__icontains=query)
             searchBlogsContent=BlogModel.objects.filter(content__icontains=query)
             search_blogs=searchBlogsTitle.union(searchBlogsContent )
-            p=Paginator(search_blogs,2)
-            pages=p.page_range
-            pageNumber=request.GET.get('page')
-            finalsearchpages=p.get_page(pageNumber)
-            context['search_blogs']=finalsearchpages
+            if search_blogs.count()==0:
+                messages.warning(request,'No search results found. Please refine your query')
+                
+            else:
+                p=Paginator(search_blogs,2)
+                pages=p.page_range
+                pageNumber=request.GET.get('page')
+                finalsearchpages=p.get_page(pageNumber)
+                context['search_blogs']=finalsearchpages
 
-        if search_blogs.count()==0:
-            messages.warning(request,'No search results found. Please refine your query')
         context['query']=query
         context['pages']=pages
     except Exception as e:

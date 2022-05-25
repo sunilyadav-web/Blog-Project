@@ -2,6 +2,7 @@
 
 <section class="py-6">
     <div class="container">
+        {% if query %}
         <h3 class="h3 my-3">Search results:</h3>
         {% if search_blogs|length < 1 %} <div class="ps-2">
             <p class="">no search results</p>
@@ -13,7 +14,8 @@
                 <li>Try more general keywords</li>
                 <li>Try fewer keywords</li>
             </ul>
-    </div>
+        </div>
+        {% endif %}
     {% endif %}
         <div class="row mb-5">
             <!-- blog item-->
