@@ -14,8 +14,8 @@
             </div>
         </div>
         <div class="info text-center mt-4 mb-3 ">
-            <h4>Sunil Yadav</h4>
-            <p>sunilcodeblog/code.com</p>
+            <h4>{{request.user.first_name}}</h4>
+            <p>@{{request.user.username}}</p>
         </div>
         <div class="bio ">
             <div class="bio-header">
@@ -27,16 +27,18 @@
         <div class="blogs ">
             <h5 class="text-center btn bg-warning w-100 mb-5">POSTS </h5>
             <div class="posts container-fluid">
-                <div class="row">
-                <div class="col-12 col-sm-5">
-                    <div class="card"><a href="">
-                        <img class="card-img-top" src="http://gravatar.com/avatar/288ce55a011c709f4e17aef7e3c86c64?s=200" alt="..." style="object-fit:cover ; aspect-ratio: 16/ 9;" /></a>
+                <div class="row align-items-center justify-content-center">
+                    {% for blog in blogs %}
+                <div class="col-12 col-sm-6 mb-2">
+                    <div class="card"><a href="{% url 'blog_detail' blog.slug %}">
+                        <img class="card-img-top" src="{{blog.image.url}}" alt="blog images" style="object-fit:cover ; aspect-ratio: 16/ 9;" /></a>
                       <div class="px-2">
-                        <span class="d-block"><a class="text-dark text-decoration-none" href="">This is testing blog </a></span>
+                        <span class="d-block"><a class="text-dark text-decoration-none" href="{% url 'blog_detail' blog.slug %}">{{blog.title}} </a></span>
                         <small class="text-gray-500">12-05-12</small>
                       </div>
                     </div>
                 </div>
+                {% endfor %}
                   </div>
             </div>
         </div>

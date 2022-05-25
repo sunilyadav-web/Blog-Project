@@ -50,7 +50,11 @@ def signout(request):
 
 def profile(request):
     if request.user.is_authenticated:
-        return render(request,'blog/profile.html')
+        context={}
+        blogs=BlogModel.objects.filter(user=request.user)
+        profile=Profile.objects.filter(user=request.user)
+        context={'blogs':blogs,'profile':profile}
+        return render(request,'blog/profile.html',context)
     else:
         messages.error(request,"Please Login!")
         return redirect(home)
