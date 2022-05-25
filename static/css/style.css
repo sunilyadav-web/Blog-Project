@@ -1,4 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+body{
+  scroll-behavior: smooth;
+}
 /* shadow for navbar */
 .scroll-header {
     box-shadow: 0 4px 4px hsla(0, 0%, 4%, .3);
