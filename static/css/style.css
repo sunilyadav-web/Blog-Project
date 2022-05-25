@@ -55,6 +55,11 @@ body{
     line-height: normal;
   }
   
+  .bio .bio-header{
+    display: flex;
+justify-content:space-between;
+align-items: center;
+  }
   /* ================ Alert============ */
 
 .alert-div{
