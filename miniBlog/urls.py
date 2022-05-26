@@ -15,4 +15,5 @@ urlpatterns = [
     path('verify/<token>',verify,name='verify'),
     path('profile',profile,name='profile'),
     path('search',search,name='search'),
+    path('edit-bio',editBio,name='editbio'),
 ]

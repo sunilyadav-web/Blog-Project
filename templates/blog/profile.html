@@ -7,22 +7,23 @@
         <!-- <h4 class="text-center">Edit Profile</h4> -->
     </div>
     <div class="profile w-50 m-auto bg-light p-4 rounded w-sm-50">
+      <small><button class="btn btn-sm btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#profileModal">Edit Profile</button></small>
         <div class="profile-pic text-center mt-2">
             <div class="image text-center ">
                 <img src="../../static/img/user.png" alt="profile image" class="profile-avatar">
-                <button  class="avatar-change " data-bs-toggle="modal" data-bs-target="#profileAvatarModal">Edit</button>
+                <!-- <button  class="avatar-change " data-bs-toggle="modal" data-bs-target="#profileAvatarModal" >Edit</button> -->
             </div>
         </div>
         <div class="info text-center mt-4 mb-3 ">
-            <h4>{{request.user.first_name}}</h4>
-            <p>@{{request.user.username}}</p>
+            <h4>{{profile.user.first_name  }} {{profile.user.last_name}}</h4>
+            <p>@{{profile.user.username}}</p>
         </div>
         <div class="bio ">
             <div class="bio-header">
                 <h5>Bio </h5>
-               <small><button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#profileBioModal">Add Bio</button></small>
+               <!-- <small><button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#profileBioModal" onclick="editProfile()">Add Bio</button></small> -->
             </div>
-            <p class="text-muted mx-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, fugiat nihil consectetur ea, debitis id quo facere alias veniam eum dolor tempore vel dicta quaerat amet temporibus distinctio, excepturi quibusdam. Numquam ratione aspernatur blanditiis aliquam eligendi doloribus nesciunt soluta! Iste?</p>
+            <p class="text-muted mx-2">{{profile.bio}}</p>
         </div>
         <div class="blogs ">
             <h5 class="text-center btn bg-warning w-100 mb-5">POSTS </h5>
@@ -65,7 +66,7 @@
   </div>
 
 <!-- Pfile Bio Modal -->
-  <div class="modal fade" id="profileBioModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

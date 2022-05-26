@@ -130,3 +130,20 @@ function register()
     })
 
 }
+
+function editProfile(){
+    var req= new XMLHttpRequest();
+
+    req.onload=function ()
+    {
+        if (this.responseText != "False")
+        {
+            console.log(response.bio)
+            console.log('Rusing')
+        }
+    }
+
+    req.open("GET","/edit-bio",true);
+    req.send
+
+}

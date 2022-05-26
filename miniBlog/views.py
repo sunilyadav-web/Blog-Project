@@ -5,13 +5,19 @@ from django.contrib.auth import logout
 from django.core.paginator import Paginator
 
 def home(request):
-    blogs=BlogModel.objects.all()
-    paginator=Paginator(blogs,3 )
-    pages=paginator.page_range
-    pageNumber=request.GET.get('page')
-    finalBlogpage=paginator.get_page(pageNumber)
-    context={'blogs':finalBlogpage,'pages':pages}
-    
+    try:
+        blogs=BlogModel.objects.all()
+        paginator=Paginator(blogs,3 )
+        pages=paginator.page_range
+        pageNumber=request.GET.get('page')
+        finalBlogpage=paginator.get_page(pageNumber)
+        context={'blogs':finalBlogpage,'pages':pages}
+        profile=Profile.objects.get(user=request.user)
+        verify=profile.is_varified
+        if not verify:
+            messages.warning(request,'Please verify your Account!')
+    except Exception as e:
+        print(e)
     return render(request,'blog/home.html',context)
 
 def signin(request):
@@ -52,15 +58,35 @@ def profile(request):
     if request.user.is_authenticated:
         context={}
         blogs=BlogModel.objects.filter(user=request.user)
-        profile=Profile.objects.filter(user=request.user)
-        context={'blogs':blogs,'profile':profile}
+        profile=Profile.objects.get(user=request.user)
+        context['blogs']=blogs
+        context['profile']=profile
         return render(request,'blog/profile.html',context)
     else:
         messages.error(request,"Please Login!")
         return redirect(home)
 
+def editBio(request):
+    if request.user.is_authenicated:
+        try:
+            profile=Profile.objects.get(user=request.user)
+            mbio=profile.bio
+            print(mbio)
+            return mbio
+        except Exception as e:
+            print(e)
+    else:
+        return('False')
+
+
 def addBlog(request):
     if request.user.is_authenticated:
+        profile=Profile.objects.get(user=request.user)
+        verify=profile.is_varified
+        if not verify:
+            messages.error(request,"You can't add blog because Your account is not verified. Please verify!")
+            return redirect(home)
+            
         context={'form':BlogForm}
         try:
             if request.method == 'POST':
