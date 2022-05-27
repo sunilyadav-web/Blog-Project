@@ -78,8 +78,9 @@
                 <input type="file" name="avatar" id="profile_pic" class="form-control">
               </div>
               <div class="mb-3">
-                <label for="bio" class="form-lable">Add bio</label>
-                <textarea class="form-control" placeholder="Update your bio" id="bio" style="height: 100px" name="bio"></textarea>
+                <label for="bio" class="form-lable">Add bio</label> <span class='text-danger float-end me-2 d-none' id="bio-error">Bio  Length exceeds</span>
+                <textarea class="form-control "  placeholder="Update your bio" id="bio" onkeyup="countChracters(this.value)" style="height: 90px" name="bio"></textarea>
+                <small class="text-end d-block mb-1 me-2">character <span id="lenght">0</span>/150</small>
               </div>
               <div class="mt-2 float-end">
                 <button type="submit" class="btn btn-primary">Save Changes</button>

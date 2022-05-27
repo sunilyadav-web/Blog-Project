@@ -119,6 +119,7 @@ function register()
 }
 
 function editProfile(){
+    
     let username=document.getElementById('username')
     let fname=document.getElementById('fname')
     let lname=document.getElementById('lname')
@@ -129,7 +130,6 @@ function editProfile(){
         method :'GET',
         headers:{
             'Content-Type':'application/json',
-            // 'X-Csrftoken':csrf,
         }
 
     }).then(result=>result.json())
@@ -140,9 +140,49 @@ function editProfile(){
             lname.value=response.lname
             email.value=response.email
             bio.value=response.bio
-    
+            countChracters(response.bio)
         }
         console.log(response)
     })
 
+}
+
+
+// Count Character of Profile bio 
+
+
+function countChracters(value)
+{
+    const bio=document.getElementById('bio')
+    let characterLen=document.getElementById('lenght')
+    let bioError=document.getElementById('bio-error')
+    const bioLength=value.length
+    if (bioLength>150)
+    {
+        console.log('length exceeds',bioLength)
+        bioError.classList.remove("d-none")
+        bio.classList.add("disabled")
+    }else{
+        characterLen.innerHTML=bioLength
+        bio.classList.remove("disabled")
+        bioError.classList.add("d-none")
+    }
+}
+
+window.onload=function(){
+    try{
+    const text=document.getElementById('message')
+    const alert=document.getElementById('alert')
+    const c=alert.classList[1]
+    if (c=='alert-success'){
+            text.innerHTML="Success : "       
+    } else if(c=='alert-danger'){
+        text.innerHTML="Error : "
+    }else if(c=='alert-warning'){
+        text.innerHTML="Warning : "
+    }
+  }
+    catch{
+        
+    } 
 }

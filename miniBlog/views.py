@@ -95,11 +95,18 @@ def profileUpdate(request):
 
                 if email:
                     user.email = email
-                if bio:
-                    profile_obj.bio = bio
+                
 
                 if request.FILES.get('avatar'):
                     profile_obj.avatar= request.FILES['avatar']
+
+                if len(bio)>150:
+                    messages.error(request,"Bio lenght can not be more than 150 characters")
+                    raise Exception('Bio lenght can not be more than 150 characters')
+
+                if bio:    
+                    profile_obj.bio = bio
+
                 user.save()
                 profile_obj.save()
                 messages.success(
@@ -152,6 +159,12 @@ def blogDetail(request, slug):
         print(e)
     return render(request, 'blog/blog_detail.html', context)
 
+def blogPublisher(request,username):
+    user=User.objects.get(username=username)
+    blogs= BlogModel.objects.filter(user=user)
+    profile=Profile.objects.get(user=user)
+    context={'profile':profile,'blogs':blogs}
+    return render(request,'blog/public_profile.html',context)
 
 def seeBlogs(request):
     if request.user.is_authenticated:
@@ -257,3 +270,4 @@ def search(request):
         print(e)
 
     return render(request, 'blog/search.html', context)
+

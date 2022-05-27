@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-{% comment %} {% load socialaccount %} {% endcomment %}
+{% load socialaccount %}
 
-{% comment %} {%  providers_media__js %} {% endcomment %}
+{%  providers_media_js %}
 
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 
 <!-- Mirrored from demo.bootstrapious.com/directory/1-6-1/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 17 Apr 2021 09:21:30 GMT -->
@@ -61,7 +61,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {{request.user.username | capfirst}}
+                {{request.user.first_name | capfirst}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
@@ -91,8 +91,8 @@
   </header>
   {% for message in messages %}
   <div class="my-alert">
-    <div class="alert alert-{{message.tags}} alert-dismissible fade show shadow " role="alert">
-    <strong>Message : </strong>{{message}}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show shadow " role="alert" id="alert">
+    <strong id='message'>Message : </strong>{{message}}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   {% endfor %}

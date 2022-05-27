@@ -25,7 +25,7 @@
             </div>
           </div>
           <!-- Submit-->
-          <button class="btn btn-lg btn-block btn-primary" onclick="login()" id="login-btn">
+          <button class="btn btn-primary" onclick="login()" id="login-btn">
             Sign in
           </button>
 
@@ -33,10 +33,10 @@
             <small class="text-muted text-center">Don't have an account yet?
               <a href="{% url 'register' %}">Sign Up </a></small>
           </p>
-          <div class='api login bg-warning text-center p-4 rounded'>
-            {% comment %} <a href="{% 'provider_login_url' facebook method='oauth2' %}" class="btn btn-info">Facebook</a> {% endcomment %}
+          {% comment %} <div class='api login bg-warning text-center p-4 rounded'>
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-info">Facebook</a>
             <a href="#" class="btn btn-primary">Google</a>
-          </div>
+          </div> {% endcomment %}
         </div>
         <a class="close-absolute mr-md-5 mr-xl-6 pt-5" href="index-2.html">
           <svg class="svg-icon w-3rem h-3rem">

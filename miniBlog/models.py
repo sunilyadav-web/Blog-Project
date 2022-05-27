@@ -9,7 +9,7 @@ class Profile(models.Model):
     is_varified=models.BooleanField(default=False)
     token=models.CharField(max_length=100)
     avatar=models.ImageField(null=True, upload_to='blog' ,default='../static/img/user.png')
-    bio=models.TextField(max_length=40, null=True , blank=True, default="this is bio")
+    bio=models.TextField(max_length=150, null=True , blank=True, default="this is bio")
     def __str__(self):
         return self.user.first_name
 
