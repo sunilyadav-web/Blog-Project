@@ -4,14 +4,12 @@
 
 <section class="my-5">
     <div class="profile-div">
-        <!-- <h4 class="text-center">Edit Profile</h4> -->
     </div>
     <div class="profile w-50 m-auto bg-light p-4 rounded w-sm-50">
-      <small><button class="btn btn-sm btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#profileModal">Edit Profile</button></small>
+      <small><button class="btn btn-sm btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="editProfile()" >Edit Profile</button></small>
         <div class="profile-pic text-center mt-2">
             <div class="image text-center ">
-                <img src="../../static/img/user.png" alt="profile image" class="profile-avatar">
-                <!-- <button  class="avatar-change " data-bs-toggle="modal" data-bs-target="#profileAvatarModal" >Edit</button> -->
+                <img src="{{profile.avatar.url}}" alt="profile image " class="profile-avatar rounded">
             </div>
         </div>
         <div class="info text-center mt-4 mb-3 ">
@@ -21,7 +19,7 @@
         <div class="bio ">
             <div class="bio-header">
                 <h5>Bio </h5>
-               <!-- <small><button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#profileBioModal" onclick="editProfile()">Add Bio</button></small> -->
+              
             </div>
             <p class="text-muted mx-2">{{profile.bio}}</p>
         </div>
@@ -46,41 +44,47 @@
     </div>
 </section>
  
-<!-- Pfile avatar Modal -->
-  <div class="modal fade" id="profileAvatarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Change Profile Image</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <input type="file" name="profile-image" class="form-control">
-            <div class="mt-2 float-end">
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-        
-      </div>
-    </div>
-  </div>
 
-<!-- Pfile Bio Modal -->
-  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- Profile  Modal -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profilemodalLavel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Bio</h5>
+          <h5 class="modal-title" id="profilemodalLavel">Edit Profile</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="form-floating ">
-                <textarea class="form-control" placeholder="Update your bio" id="floatingTextarea2" style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Add bio</label>
+          <form action="{% url 'profile_update' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="username">
+              </div>
+              <div class="mb-3">
+                <label for="fname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+              </div>
+              <div class="mb-3">
+                <label for="lname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+              </div>
+              <div class="mb-3">
+                <label for="profile_pic" class="form-lable">Profile Pic</label>
+                <input type="file" name="avatar" id="profile_pic" class="form-control">
+              </div>
+              <div class="mb-3">
+                <label for="bio" class="form-lable">Add bio</label>
+                <textarea class="form-control" placeholder="Update your bio" id="bio" style="height: 100px" name="bio"></textarea>
               </div>
               <div class="mt-2 float-end">
-                  <button type="button" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
               </div>
+            </form>
         </div>
         
       </div>

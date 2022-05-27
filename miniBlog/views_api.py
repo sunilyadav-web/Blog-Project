@@ -1,3 +1,4 @@
+from webbrowser import get
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -108,5 +109,27 @@ class RegisterView(APIView):
         return Response(response)
 
 RegisterView=RegisterView.as_view()
+
+class GetProfileDataView(APIView):
+    def get(self ,request):
+        response={}
+        response['status']=500
+        response['message']='something went wrong'
+        if True:
+            try:
+                profile=Profile.objects.get(user=request.user)
+                response['username']=profile.user.username
+                response['fname']=profile.user.first_name
+                response['lname']=profile.user.last_name
+                response['email']=profile.user.email
+                response['bio']=profile.bio
+                response['status']=200
+                response['message']='successful'
+            except Exception as e:
+                print(e)
+        return Response(response)
+    
+GetProfileDataView=GetProfileDataView.as_view()
+                
 
     

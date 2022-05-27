@@ -104,27 +104,14 @@ function register()
         method :'POST',
         headers:{
             'Content-Type':'application/json',
-            'X-Csrftoken':csrf,
+            // 'X-Csrftoken':csrf,
         },body:JSON.stringify(data)
 
     }).then(result=>result.json())
     .then(response=>{
         console.log(response)
         if(response.status == 200){
-           inputGroup.forEach(
-               e=>{
-                   e.value=''
-                   customAlert.classList.remove('d-none')
-                   customAlert.classList.remove('alert-danger')
-                   customAlert.classList.add('alert-success')
-                   message.innerHTML=response.message
-                   
-                }
-                )
-            }
-            if (response.status ==500){
-                customAlert.classList.remove('d-none')
-            message.innerHTML=response.message
+          
         }
         
     })
@@ -132,18 +119,30 @@ function register()
 }
 
 function editProfile(){
-    var req= new XMLHttpRequest();
-
-    req.onload=function ()
-    {
-        if (this.responseText != "False")
-        {
-            console.log(response.bio)
-            console.log('Rusing')
+    let username=document.getElementById('username')
+    let fname=document.getElementById('fname')
+    let lname=document.getElementById('lname')
+    let email=document.getElementById('email')
+    let bio=document.getElementById('bio')
+    url='/api/get-profile'
+    fetch(url,{
+        method :'GET',
+        headers:{
+            'Content-Type':'application/json',
+            // 'X-Csrftoken':csrf,
         }
-    }
 
-    req.open("GET","/edit-bio",true);
-    req.send
+    }).then(result=>result.json())
+    .then(response=>{
+        if(response.status == 200){
+            username.value=response.username
+            fname.value=response.fname
+            lname.value=response.lname
+            email.value=response.email
+            bio.value=response.bio
+    
+        }
+        console.log(response)
+    })
 
 }

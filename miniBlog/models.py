@@ -8,8 +8,8 @@ class Profile(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     is_varified=models.BooleanField(default=False)
     token=models.CharField(max_length=100)
+    avatar=models.ImageField(null=True, upload_to='blog' ,default='../static/img/user.png')
     bio=models.TextField(max_length=40, null=True , blank=True, default="this is bio")
-    # image=models.ImageField(upload_to='blog',default='../static/img/user.png', null)
     def __str__(self):
         return self.user.first_name
 

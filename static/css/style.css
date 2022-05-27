@@ -15,8 +15,9 @@ body{
   }
 
   .image {
-    width: 8em;
-    height: 8em;
+    width: 9em;
+    height: 9em;
+
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -30,9 +31,11 @@ body{
   .profile-avatar {
     display: block;
     text-align: center;
-    cursor: pointer;
+    width: 100%;
+    object-fit: cover;
+    
   }
-  .avatar-change{
+  /* .avatar-change{
     position: absolute;
     background: none;
     outline: none;    
@@ -45,9 +48,7 @@ body{
     display: none;
   }
   
-  .profile-avatar:hover +.avatar-change{
-    display: block;
-  }
+   */
 
  
   .bio p{
