@@ -18,4 +18,6 @@ urlpatterns = [
     path('search',search,name='search'),
     path('<username>',blogPublisher,name='blog_publisher'),
     path('comment-add/<slug>',commentAdd,name='comment_add'),
+    path('comment-delete/<id>',commentDelete,name='comment_delete'),
+    
 ]

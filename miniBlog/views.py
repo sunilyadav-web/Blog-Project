@@ -329,8 +329,23 @@ def commentAdd(request,slug):
 def commentUpdate(request):
     pass
 
-def commentDelete(request):
-    pass
+def commentDelete(request,id):
+    try:
+        comment_obj=CommentModel.objects.get(id=id)
+        if request.user.is_authenticated:
+            if comment_obj.user==request.user:
+                print('comment get')
+                comment_obj.delete()
+                messages.success(request, 'Comment deleted successfully!')
+                return redirect(blogDetail,comment_obj.blog.slug)
+            else:
+                messages.error(request,"Sorry! You don't have permission to delete this comment")
+        else:
+            messages.error(request,'Please login!')
+    except Exception as e:
+        print(e)
+    return redirect(blogDetail,comment_obj.blog.slug)
+
 
 
 # Like Model Views

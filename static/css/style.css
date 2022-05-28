@@ -123,6 +123,22 @@ align-items: center;
 
 }
 
+/* update and delete comment */
 
+.update-comment{
+  position: relative;
+}
+.update-comment span{
+  position: absolute;
+  bottom: 45px;
+  right: 15px;
+  /* cursor: pointer; */
+}
 
+.comment-action{
+  background-color: green;
+  width: max-content;
+  padding: 10px 20px;
+  position: absolute;
+}
 
