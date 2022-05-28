@@ -49,13 +49,18 @@ def verify(request, token):
         print(e)
 
 def signout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        messages.success(request, 'You are logged out successfully!')
+    try:
+        if request.user.is_authenticated:
+            logout(request)
+            messages.success(request, 'You are logged out successfully!')
+            return redirect(home)
+        else:
+            messages.error(request, "Please Login!")
+            return redirect(signin)
+    except Exception as e:
+        print(e)
+        messages.error(request,'something went wrong')
         return redirect(home)
-    else:
-        messages.error(request, "Please Login!")
-        return redirect(signin)
 
 def profile(request):
     try:
@@ -71,7 +76,7 @@ def profile(request):
             return redirect(home)
     except Exception as e:
         print(e)
-
+        
 def profileUpdate(request):
     try:
         if request.user.is_authenticated:
@@ -119,6 +124,7 @@ def profileUpdate(request):
 
     return redirect(profile)
 
+
 def addBlog(request):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user=request.user)
@@ -160,10 +166,16 @@ def blogDetail(request, slug):
     return render(request, 'blog/blog_detail.html', context)
 
 def blogPublisher(request,username):
-    user=User.objects.get(username=username)
-    blogs= BlogModel.objects.filter(user=user)
-    profile=Profile.objects.get(user=user)
-    context={'profile':profile,'blogs':blogs}
+    try:
+        user_obj=User.objects.get(username=username)
+        if request.user.username==username:
+            return redirect(profile)
+        blogs= BlogModel.objects.filter(user=user_obj)
+        profile_obj=Profile.objects.get(user=user_obj)
+        context={'profile':profile_obj,'blogs':blogs}
+    except Exception as e:
+        print(e)
+
     return render(request,'blog/public_profile.html',context)
 
 def seeBlogs(request):
@@ -258,7 +270,7 @@ def search(request):
                 messages.warning(
                     request, 'No search results found. Please refine your query')
             else:
-                p = Paginator(search_blogs, 2)
+                p = Paginator(search_blogs, 3)
                 pages = p.page_range
                 pageNumber = request.GET.get('page')
                 finalsearchpages = p.get_page(pageNumber)
