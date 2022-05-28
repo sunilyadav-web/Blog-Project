@@ -142,3 +142,11 @@ align-items: center;
   position: absolute;
 }
 
+
+/* Likes Section */
+
+.like-btn{
+  font-size: 1rem;
+  cursor: pointer;
+}
+

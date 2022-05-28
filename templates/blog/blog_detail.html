@@ -14,6 +14,18 @@
         <div class="text-content">
           {{blog_obj.content | safe}}
         </div>
+        <div class="like-and-share-section d-flex">
+<div class="like">
+
+  <span class="like-btn"><i class='bx bx-like'></i></span><span class="ms-2">1</span>
+</div>
+<div class="share">
+    <i class='bx bx-share' ></i>
+</div>
+<div class="com">
+  <i class='bx bxs-comment'></i>
+</div>
+        </div>
         <div class="comment-section pt-3">
           <div class="count-comments mb-3 h6 text-start">
             <span class="me-2">{{comments_obj.count}}</span><span>Comments</span>
