@@ -30,12 +30,14 @@ def signin(request):
     else:
         return render(request, 'blog/login.html')
 
+
 def register(request):
     if request.user.is_authenticated:
         messages.error(request, "Please logout then you can Signup!")
         return redirect(home)
     else:
         return render(request, 'blog/register.html')
+
 
 def verify(request, token):
     try:
@@ -48,6 +50,7 @@ def verify(request, token):
     except Exception as e:
         print(e)
 
+
 def signout(request):
     try:
         if request.user.is_authenticated:
@@ -59,8 +62,9 @@ def signout(request):
             return redirect(signin)
     except Exception as e:
         print(e)
-        messages.error(request,'something went wrong')
+        messages.error(request, 'something went wrong')
         return redirect(home)
+
 
 def profile(request):
     try:
@@ -76,7 +80,8 @@ def profile(request):
             return redirect(home)
     except Exception as e:
         print(e)
-        
+
+
 def profileUpdate(request):
     try:
         if request.user.is_authenticated:
@@ -100,16 +105,17 @@ def profileUpdate(request):
 
                 if email:
                     user.email = email
-                
 
                 if request.FILES.get('avatar'):
-                    profile_obj.avatar= request.FILES['avatar']
+                    profile_obj.avatar = request.FILES['avatar']
 
-                if len(bio)>150:
-                    messages.error(request,"Bio lenght can not be more than 150 characters")
-                    raise Exception('Bio lenght can not be more than 150 characters')
+                if len(bio) > 150:
+                    messages.error(
+                        request, "Bio lenght can not be more than 150 characters")
+                    raise Exception(
+                        'Bio lenght can not be more than 150 characters')
 
-                if bio:    
+                if bio:
                     profile_obj.bio = bio
 
                 user.save()
@@ -156,6 +162,7 @@ def addBlog(request):
         messages.error(request, "Please Login!")
         return redirect(home)
 
+
 def blogDetail(request, slug):
     context = {}
     try:
@@ -165,18 +172,20 @@ def blogDetail(request, slug):
         print(e)
     return render(request, 'blog/blog_detail.html', context)
 
-def blogPublisher(request,username):
+
+def blogPublisher(request, username):
     try:
-        user_obj=User.objects.get(username=username)
-        if request.user.username==username:
+        user_obj = User.objects.get(username=username)
+        if request.user.username == username:
             return redirect(profile)
-        blogs= BlogModel.objects.filter(user=user_obj)
-        profile_obj=Profile.objects.get(user=user_obj)
-        context={'profile':profile_obj,'blogs':blogs}
+        blogs = BlogModel.objects.filter(user=user_obj)
+        profile_obj = Profile.objects.get(user=user_obj)
+        context = {'profile': profile_obj, 'blogs': blogs}
     except Exception as e:
         print(e)
 
-    return render(request,'blog/public_profile.html',context)
+    return render(request, 'blog/public_profile.html', context)
+
 
 def seeBlogs(request):
     if request.user.is_authenticated:
@@ -190,6 +199,7 @@ def seeBlogs(request):
     else:
         messages.error(request, "Please Login!")
         return redirect(home)
+
 
 def updateBlog(request, slug):
     if request.user.is_authenticated:
@@ -231,6 +241,7 @@ def updateBlog(request, slug):
         messages.error(request, "Please Login!")
         return redirect(home)
 
+
 def deleteBlog(request, slug):
     if request.user.is_authenticated:
         try:
@@ -246,6 +257,7 @@ def deleteBlog(request, slug):
     else:
         messages.error(request, "Please Login!")
         return redirect(home)
+
 
 def search(request):
     context = {}
@@ -282,4 +294,24 @@ def search(request):
         print(e)
 
     return render(request, 'blog/search.html', context)
+
+# Comment Model Views
+
+def commentAdd(request):
+    pass
+
+def commentUpdate(request):
+    pass
+
+def commentDelete(request):
+    pass
+
+
+# Like Model Views
+
+# def likeAdd(request):
+#     pass
+
+# def likeRemove(request):
+#     pass
 

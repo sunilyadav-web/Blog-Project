@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-
+{% load static %}
 {% block start %}
 <section>
     <div class="container mt-5 mb-5">
@@ -13,6 +13,29 @@
         <div class="col-xl-8 col-lg-10 mx-auto">                               
           <div class="text-content">
             {{blog_obj.content | safe}}
+          </div>
+          <div class="comment-section pt-3">
+            <div class="count-comments mb-3 h6 text-start">
+              <span class="me-2">12</span><span>Comments</span>
+            </div>
+            <form action="#" method="post">
+              <textarea class="form-control" placeholder="Leave a comment here" id="comment" ></textarea>
+              <div class="comment-btn mt-2 text-end">
+                <button class="btn btn-outline-secondary">Cancel</button>
+                <button class="btn btn-outline-primary">Submit</button>
+                
+              </div>
+            </form>
+          </div>
+          <div class="display-comments">
+            <div class="comment">
+              <div class="c-user-detail ">
+              <img src="{% static 'img/user.png' %}" alt="" class="img me-3">
+              <h6>Sunil Yadav</h6>
+              <small class="ms-5 tex-sm mb-1 text-muted">02/12/2022</small>
+            </div>
+              <p class="text-start comment-text ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi, laborum sunt asperiores eum qui saepe nam odit soluta porro sequi culpa obcaecati, laboriosam, maxime placeat hic repellendus atque. Voluptas amet odio similique commodi porro iusto necessitatibus quos sequi tempora corrupti?</p>
+            </div>
           </div>
       </div>
     </div>
