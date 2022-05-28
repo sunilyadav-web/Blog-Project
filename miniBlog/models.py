@@ -5,7 +5,7 @@ from froala_editor.fields import FroalaField
 from .helpers import *
 
 class Profile(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
     is_varified=models.BooleanField(default=False)
     token=models.CharField(max_length=100)
     avatar=models.ImageField(null=True, upload_to='blog' ,default='../static/img/user.png')
