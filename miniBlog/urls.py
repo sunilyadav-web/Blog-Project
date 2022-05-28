@@ -17,4 +17,5 @@ urlpatterns = [
     path('edit-profile',profileUpdate,name='profile_update'),
     path('search',search,name='search'),
     path('<username>',blogPublisher,name='blog_publisher'),
+    path('comment-add/<slug>',commentAdd,name='comment_add'),
 ]

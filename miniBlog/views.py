@@ -168,8 +168,7 @@ def blogDetail(request, slug):
     try:
         blog_obj = BlogModel.objects.filter(slug=slug).first()
         comments_obj=CommentModel.objects.filter(blog=blog_obj)
-        print('printing comment obj')
-        print(comments_obj)
+        
         context['blog_obj'] = blog_obj
         context['comments_obj'] = comments_obj
         
@@ -302,8 +301,30 @@ def search(request):
 
 # Comment Model Views
 
-def commentAdd(request):
-    pass
+def commentAdd(request,slug):
+    try:
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                user_obj=User.objects.get(username=request.user.username)
+                profile_obj=Profile.objects.get(user=request.user)                
+                blog_obj=BlogModel.objects.get(slug=slug)
+                comment=request.POST['comment']
+                if len(comment) == 0:
+                    messages.error(request,'Please write comment!')
+                    return redirect(blogDetail,slug)
+                CommentModel.objects.create(user=user_obj,profile=profile_obj,blog=blog_obj,comment=comment)
+                print('create issue')
+                messages.success(request,'Comment addd!')
+                return redirect(blogDetail)
+            else:
+                messages.error(request,'something went wrong !')
+                return redirect(home)
+                
+        else:
+            messages.error(request,'Please login ! for comment')
+    except Exception as e:
+        print(e)
+    return redirect(blogDetail,slug)
 
 def commentUpdate(request):
     pass

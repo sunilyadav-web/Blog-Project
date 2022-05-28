@@ -186,3 +186,19 @@ window.onload=function(){
         
     } 
 }
+
+function btnEnable(val){
+    const commentCancel=document.getElementById('comment-cancel')
+    const commentSubmit=document.getElementById('comment-submit')
+
+    if (val != ''){
+        console.log(val)
+        commentCancel.classList.remove('disabled')
+        commentSubmit.classList.remove('disabled')
+    }else{
+        
+        commentCancel.classList.add('disabled')
+        commentSubmit.classList.add('disabled')
+    }
+
+}

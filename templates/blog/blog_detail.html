@@ -2,47 +2,50 @@
 {% load static %}
 {% block start %}
 <section>
-    <div class="container mt-5 mb-5">
-      <div class="row text-center ">
-        <div class="col-xl-8 col-lg-10 mx-auto mb-2">
-          <h3 class="text-center">{{blog_obj.title}}</h3>
-        </div>
-        <div class="col-xl-10 mx-auto"><img class="img-fluid mb-5" src="{{blog_obj.image.url}}" alt=""></div>
+  <div class="container mt-5 mb-5">
+    <div class="row text-center ">
+      <div class="col-xl-8 col-lg-10 mx-auto mb-2">
+        <h3 class="text-center">{{blog_obj.title}}</h3>
       </div>
-      <div class="row text-center">
-        <div class="col-xl-8 col-lg-10 mx-auto">                               
-          <div class="text-content">
-            {{blog_obj.content | safe}}
+      <div class="col-xl-10 mx-auto"><img class="img-fluid mb-5" src="{{blog_obj.image.url}}" alt=""></div>
+    </div>
+    <div class="row text-center">
+      <div class="col-xl-8 col-lg-10 mx-auto">
+        <div class="text-content">
+          {{blog_obj.content | safe}}
+        </div>
+        <div class="comment-section pt-3">
+          <div class="count-comments mb-3 h6 text-start">
+            <span class="me-2">{{comments_obj.count}}</span><span>Comments</span>
           </div>
-          <div class="comment-section pt-3">
-            <div class="count-comments mb-3 h6 text-start">
-              <span class="me-2">12</span><span>Comments</span>
+          <form action="{% url 'comment_add' blog_obj.slug %}" method="post">
+            {% csrf_token %}
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment" name='comment'
+              onkeyup="btnEnable(this.value)"></textarea>
+            <div class="comment-btn mt-2 text-end">
+              <button class="btn btn-outline-secondary disabled" id="comment-cancel">Cancel</button>
+              <button type="submit" class="btn btn-outline-primary disabled" id="comment-submit">Submit</button>
             </div>
-            <form action="#" method="post">
-              <textarea class="form-control" placeholder="Leave a comment here" id="comment" ></textarea>
-              <div class="comment-btn mt-2 text-end">
-                <button class="btn btn-outline-secondary">Cancel</button>
-                <button class="btn btn-outline-primary">Submit</button>
-                
+          </form>
+        </div>
+        <div class="display-comments">
+          {% for comment in comments_obj %}
+          <div class="comment">
+            <div class="c-user-detail ">
+              <div class="comment-avatar-div me-3">
+                <img src="{{comment.profile.avatar.url}}" alt="" class="img me-3 rounded-circle">
               </div>
-            </form>
-          </div>
-          <div class="display-comments">
-            {% for comment in comments_obj  %}
-            <div class="comment">
-              <div class="c-user-detail ">
-              <img src="{% static 'img/user.png' %}" alt="" class="img me-3">
               <h6>{{comment.user.first_name}} {{comment.user.last_name}}</h6>
-              <small class="ms-5 tex-sm mb-1 text-muted">02/12/2022</small>
+              <small class="ms-5 tex-sm mb-1 text-muted">{{comment.created_at | date}}</small>
             </div>
-              <p class="text-start comment-text ms-4">{{comment.comment}}</p>
-            </div>
-            {% endfor %}
+            <p class="text-start comment-text ms-4">{{comment.comment}}</p>
           </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
-  </section>
+</section>
 
 
-  
-{% endblock  %}
+
+{% endblock %}
