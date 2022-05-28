@@ -3,3 +3,5 @@ from .models import *
 
 admin.site.register(BlogModel)
 admin.site.register(Profile)
+admin.site.register(CommentModel)
+admin.site.register(LikeModel)

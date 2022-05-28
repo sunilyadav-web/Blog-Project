@@ -30,3 +30,17 @@ class BlogModel(models.Model):
         print('this is slug',s)
         self.slug=s
         super(BlogModel,self).save(*args, **kwargs)
+
+class CommentModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    blog=models.ForeignKey(BlogModel,on_delete=models.CASCADE)
+    comment=models.TextField(max_length=100)
+    def __str__(self):
+        return self.blog.title
+
+class LikeModel(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    blog=models.ForeignKey(BlogModel,on_delete=models.CASCADE)
+    like=models.IntegerField()
+    def __str__(self):
+        return self.blog.title
