@@ -167,7 +167,12 @@ def blogDetail(request, slug):
     context = {}
     try:
         blog_obj = BlogModel.objects.filter(slug=slug).first()
+        comments_obj=CommentModel.objects.filter(blog=blog_obj)
+        print('printing comment obj')
+        print(comments_obj)
         context['blog_obj'] = blog_obj
+        context['comments_obj'] = comments_obj
+        
     except Exception as e:
         print(e)
     return render(request, 'blog/blog_detail.html', context)

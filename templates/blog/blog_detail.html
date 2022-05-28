@@ -28,14 +28,16 @@
             </form>
           </div>
           <div class="display-comments">
+            {% for comment in comments_obj  %}
             <div class="comment">
               <div class="c-user-detail ">
               <img src="{% static 'img/user.png' %}" alt="" class="img me-3">
-              <h6>Sunil Yadav</h6>
+              <h6>{{comment.user.first_name}} {{comment.user.last_name}}</h6>
               <small class="ms-5 tex-sm mb-1 text-muted">02/12/2022</small>
             </div>
-              <p class="text-start comment-text ">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi, laborum sunt asperiores eum qui saepe nam odit soluta porro sequi culpa obcaecati, laboriosam, maxime placeat hic repellendus atque. Voluptas amet odio similique commodi porro iusto necessitatibus quos sequi tempora corrupti?</p>
+              <p class="text-start comment-text ms-4">{{comment.comment}}</p>
             </div>
+            {% endfor %}
           </div>
       </div>
     </div>

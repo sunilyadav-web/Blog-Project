@@ -34,7 +34,10 @@ class BlogModel(models.Model):
 class CommentModel(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     blog=models.ForeignKey(BlogModel,on_delete=models.CASCADE)
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
     comment=models.TextField(max_length=100)
+    created_at=models.DateTimeField(auto_now_add=True , null=True)
+    upload_to=models.DateTimeField(auto_now=True, null=True)
     def __str__(self):
         return self.blog.title
 
