@@ -150,3 +150,29 @@ align-items: center;
   cursor: pointer;
 }
 
+.share-btn{
+  background-color: transparent;
+  border: none;
+}
+.share-div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #0000ff54;
+  background-color: #ffffff;
+  border-radius: 1px;
+  padding: 3px 0px;
+}
+.share-input{
+  border: none;
+  font-size: 13px;
+  width: 70%;
+}
+
+.copy-btn{
+  background-color: transparent;
+  border: none;
+  text-transform:uppercase; 
+  color: blue;
+  font-size: 1rem;
+}

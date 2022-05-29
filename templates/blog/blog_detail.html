@@ -16,10 +16,15 @@
         </div>
         <div class="like-and-share-section d-flex">
           <div class="like">
-            <span class="like-btn" onclick="AddLike()"><i id="like-icon" class='bx bx-like'></i></span><span class="ms-2" id="count-like">0</span>
+            <span class="like-btn" onclick="AddLike()"><i id="like-icon" class='bx bx-like'></i></span><span
+              class="ms-2" id="count-like">0</span>
           </div>
           <div class="share">
-            <i class='bx bx-share'></i>
+
+            <!-- Button trigger Share modal -->
+            <button type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#share" onclick="getLink()">
+              <i class='bx bx-share'></i>
+            </button>
           </div>
           <div class="com">
             <i class='bx bxs-comment'></i>
@@ -35,7 +40,8 @@
               onkeyup="btnEnable(this.value)"></textarea>
             <div class="comment-btn mt-2 text-end">
               <button type="reset" class="btn btn-secondary disabled" id="comment-cancel">Cancel</button>
-              <button type="submit" class="btn btn-primary disabled" id="comment-submit" onclick="UpdataComment()" >Submit</button>
+              <button type="submit" class="btn btn-primary disabled" id="comment-submit"
+                onclick="UpdataComment()">Submit</button>
             </div>
           </form>
         </div>
@@ -61,7 +67,7 @@
                   d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
               </svg>
               <a href="{% url 'comment_delete' comment.id %}" class="btn-danger btn btn-sm">Delete</a>
-              <a  class="btn-warning btn btn-sm" onclick="EditComment({{comment.id}})">Edit</a>
+              <a class="btn-warning btn btn-sm" onclick="EditComment({{comment.id}})">Edit</a>
             </span>
           </div>
           {% endif %}
@@ -77,6 +83,39 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade " id="share" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="shareLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shareLabel">Share</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body py-5 ">
+       <div class="share-div mx-2">
+         <input type="text" readonly="" class="share-input ms-2"  id="share-input"><button class="copy-btn me-3" onclick="CopyShareLink()" id="liveToast">Copy</button>
+       </div>
+       
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Toaster Bootstrap -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" >
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="..." class="rounded me-2" alt="...">
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+  </div>
+</div>
+
 {% endblock %}
-
-

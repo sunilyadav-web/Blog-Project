@@ -304,3 +304,25 @@ function AddLike(){
     }
     countlike.innerHTML=count
 }
+
+var shareLink;
+function getLink()
+{
+    var shareInput=document.getElementById('share-input')
+    this.shareLink=window.location.href
+    shareInput.value=this.shareLink
+}
+function CopyShareLink()
+{
+    let link=document.getElementById('share-input')
+    console.log('this is link', link)
+     /* Select the text field */
+  link.select();
+  link.setSelectionRange(0, 99999); /* For mobile devices */
+
+   /* Copy the text inside the text field */
+  navigator.clipboard.writeText(link.value);
+
+  /* Alert the copied text */
+  alert("Copied the text: " + link.value);
+}
