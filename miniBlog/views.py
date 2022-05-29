@@ -178,6 +178,7 @@ def blogDetail(request, slug):
 
 
 def blogPublisher(request, username):
+    context={}
     try:
         user_obj = User.objects.get(username=username)
         if request.user.username == username:

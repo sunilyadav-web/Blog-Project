@@ -15,28 +15,28 @@
           {{blog_obj.content | safe}}
         </div>
         <div class="like-and-share-section d-flex">
-<div class="like">
+          <div class="like">
 
-  <span class="like-btn"><i class='bx bx-like'></i></span><span class="ms-2">1</span>
-</div>
-<div class="share">
-    <i class='bx bx-share' ></i>
-</div>
-<div class="com">
-  <i class='bx bxs-comment'></i>
-</div>
+            <span class="like-btn"><i class='bx bx-like'></i></span><span class="ms-2">1</span>
+          </div>
+          <div class="share">
+            <i class='bx bx-share'></i>
+          </div>
+          <div class="com">
+            <i class='bx bxs-comment'></i>
+          </div>
         </div>
         <div class="comment-section pt-3">
           <div class="count-comments mb-3 h6 text-start">
             <span class="me-2">{{comments_obj.count}}</span><span>Comments</span>
           </div>
-          <form action="{% url 'comment_add' blog_obj.slug %}" method="post">
+          <form action="{% url 'comment_add' blog_obj.slug %}" method="post" id="comment-form">
             {% csrf_token %}
             <textarea class="form-control" placeholder="Leave a comment here" id="comment" name='comment'
               onkeyup="btnEnable(this.value)"></textarea>
             <div class="comment-btn mt-2 text-end">
-              <button class="btn btn-secondary disabled" id="comment-cancel">Cancel</button>
-              <button type="submit" class="btn btn-primary disabled" id="comment-submit">Submit</button>
+              <button type="reset" class="btn btn-secondary disabled" id="comment-cancel">Cancel</button>
+              <button type="submit" class="btn btn-primary disabled" id="comment-submit" onclick="UpdataComment()" >Submit</button>
             </div>
           </form>
         </div>
@@ -49,17 +49,20 @@
               </div>
               <h6>{{comment.user.first_name}} {{comment.user.last_name}}</h6>
               <small class="ms-5 tex-sm mb-1 text-muted">{{comment.created_at | date}}</small>
-             
+
             </div>
             <p class="text-start comment-text ms-4">{{comment.comment}}</p>
           </div>
           {% if comment.user == request.user %}
           <div class="update-comment">
             <span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path
+                  d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
               </svg>
               <a href="{% url 'comment_delete' comment.id %}" class="btn-danger btn btn-sm">Delete</a>
+              <a  class="btn-warning btn btn-sm" onclick="EditComment({{comment.id}})">Edit</a>
             </span>
           </div>
           {% endif %}
@@ -76,3 +79,5 @@
 
 
 {% endblock %}
+
+

@@ -192,7 +192,6 @@ function btnEnable(val){
     const commentSubmit=document.getElementById('comment-submit')
 
     if (val != ''){
-        console.log(val)
         commentCancel.classList.remove('disabled')
         commentSubmit.classList.remove('disabled')
     }else{
@@ -201,4 +200,86 @@ function btnEnable(val){
         commentSubmit.classList.add('disabled')
     }
 
+}
+// comment id
+var id;
+
+// get comment data
+
+function EditComment(val)
+{
+    this.id=val
+    const commentCancel=document.getElementById('comment-cancel')
+    const commentSubmit=document.getElementById('comment-submit')
+    const comment=document.getElementById('comment'),
+    commentForm=document.getElementById('comment-form')
+
+url='/api/get-comment?id='+val
+    fetch(url,{
+        method :'GET',
+        headers:{
+            'Content-Type':'application/json',
+        }
+
+    }).then(result=>result.json())
+    .then(response=>{
+       if (response.status==200)
+       {
+           comment.value=response.comment
+            commentSubmit.classList.remove('disabled')
+            commentCancel.classList.remove('disabled')
+            commentSubmit.innerHTML='Save'
+            commentForm.addEventListener("submit",e=>{
+                e.preventDefault();
+            })
+       }
+    })
+
+commentCancel.addEventListener('click',function (){
+
+    commentCancel.classList.add('disabled')
+    commentSubmit.classList.add('disabled')
+    commentSubmit.innerHTML='Submit'
+    commentForm.addEventListener("submit",e=>{
+        document.location.reload
+    })
+})
+
+}
+
+// send edited comment to server
+
+function UpdataComment()
+{
+
+    var csrf=document.getElementById('csrf').value
+    var customAlert=document.getElementById('alert')
+    var message=document.getElementById('message')
+    var comment=document.getElementById('comment').value
+    var id=this.id
+    console.log(id)
+    data={
+        'comment': comment,
+        'id':id,
+    }
+    url='/api/update-comment'
+    fetch(url,{
+        method :'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'X-Csrftoken':csrf,
+        },body:JSON.stringify(data)
+
+    }).then(result=>result.json())
+    .then(response=>{
+        if(response.status == 200){
+            console.log(response)
+            document.location.reload()
+        }
+        if(response.status ==500){
+            customAlert.classList.remove('d-none')
+            message.innerHTML=response.message   
+            document.location.reload()
+        }
+    })
 }
