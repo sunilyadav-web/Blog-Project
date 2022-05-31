@@ -374,3 +374,31 @@ def likePost(request,slug):
     except Exception as e:
         print(e)
     return HttpResponseRedirect(reverse('blog_detail',args=[str(slug)]))
+
+def followUser(request):
+    # try:
+    #     print('try block')
+    #     if request.user.is_authenticated:
+    #         print('auth is runing')
+    #         user=request.POST['follower']
+    #         profile_obj=Profile.objects.get(user=user)
+    #         print(profile_obj)
+    #         if profile_obj.follower.filter(id=request.user.id).exists():
+
+    #             profile_obj.follower.remove(request.user)
+    #             messages.success(request,'You have unfollow ')
+    #         else:
+    #             profile_obj.follower.add(request.user)
+    #             messages.success(request,'You have follow ')
+    #     else:
+    #         messages.error(request,'Please login!')
+    # except Exception as e:
+    #     print(e)
+    print('inisde follow function')
+    return redirect(home)
+    
+def mefollow(request):
+    print(request.user.username)
+    if request.method == 'post':
+        print('this is post section')
+    return redirect(home)

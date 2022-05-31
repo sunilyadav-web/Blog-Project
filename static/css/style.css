@@ -61,6 +61,11 @@ body{
 justify-content:space-between;
 align-items: center;
   }
+
+  .follow-btn{
+    background-color: transparent;
+    border: none;
+  }
   /* ================ Alert============ */
 
 .alert-div{

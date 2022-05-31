@@ -10,6 +10,11 @@ class Profile(models.Model):
     token=models.CharField(max_length=100)
     avatar=models.ImageField(null=True, upload_to='blog' ,default='../static/img/user.png')
     bio=models.TextField(max_length=150, null=True , blank=True, default="this is bio")
+    follower=models.ManyToManyField(User,blank=True,related_name='follow')
+    @property
+    def totalFollower(self):
+        return self.follower.count()
+
     def __str__(self):
         return self.user.first_name
 
