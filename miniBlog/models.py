@@ -45,9 +45,3 @@ class CommentModel(models.Model):
     def __str__(self):
         return self.blog.title
 
-class LikeModel(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    blog=models.ForeignKey(BlogModel,on_delete=models.CASCADE)
-    like=models.IntegerField()
-    def __str__(self):
-        return self.blog.title
