@@ -284,26 +284,8 @@ function UpdataComment()
     })
 }
 
-// Like button Script
 
-function AddLike(){
-    
-    let likeIcon=document.getElementById('like-icon'),
-    countlike=document.getElementById('count-like'),
-    count=0
-    if(likeIcon.classList=='bx bx-like')
-    {
-        count=1
-        likeIcon.classList.add('bxs-like')
-        likeIcon.classList.remove('bx-like')
-    }else{
-        count=0
-        likeIcon.classList.add('bx-like')
-        likeIcon.classList.remove('bxs-like')
-
-    }
-    countlike.innerHTML=count
-}
+// =====Share Link Script========
 
 var shareLink;
 function getLink()

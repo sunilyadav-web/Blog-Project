@@ -16,11 +16,21 @@
         </div>
         <div class="like-and-share-section d-flex">
           <div class="like">
-            <span class="like-btn" onclick="AddLike()"><i id="like-icon" class='bx bx-like'></i></span><span
-              class="ms-2" id="count-like">0</span>
+            <form action="{% url 'post_like' blog_obj.slug %}" method="post">
+              {% csrf_token %}
+              {% if liked %}
+              <button type="submit" name="post_id" value="{{blog_obj.id}}" class="btn btn-primary btn-sm">UnLike</button>
+              {% else %}
+
+              <button type="submit" name="post_id" value="{{blog_obj.id}}" class="btn btn-primary btn-sm">Like</button>
+              {% endif %}
+            </form>
+            <!-- <span class="like-btn" onclick="AddLike({{blog_obj.slug}})">like</span> -->
+            
+            <span class="ms-2" id="count-like">{{blog_obj.totalLike}} Likes</span>
           </div>
           <div class="share">
-
+            <!-- <i id="like-icon" class='bx bx-like'> </i>-->
             <!-- Button trigger Share modal -->
             <button type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#share" onclick="getLink()">
               <i class='bx bx-share'></i>
@@ -34,7 +44,7 @@
           <div class="count-comments mb-3 h6 text-start">
             <span class="me-2">{{comments_obj.count}}</span><span>Comments</span>
           </div>
-          <form action="{% url 'comment_add' blog_obj.slug %}" method="post" id="comment-form">
+          <form action="{% url 'comment-add' blog_obj.slug %}" method="post" id="comment-form">
             {% csrf_token %}
             <textarea class="form-control" placeholder="Leave a comment here" id="comment" name='comment'
               onkeyup="btnEnable(this.value)"></textarea>
@@ -52,7 +62,7 @@
               <div class="comment-avatar-div me-3">
                 <img src="{{comment.profile.avatar.url}}" alt="" class="img me-3 rounded-circle">
               </div>
-              <h6>{{comment.user.first_name}} {{comment.user.last_name}}</h6>
+              <h6><a class="text-decoration-none text-dark" href="{% url 'blog_publisher' comment.user.username%}">{{comment.user.first_name}} {{comment.user.last_name}}</a></h6>
               <small class="ms-5 tex-sm mb-1 text-muted">{{comment.created_at | date}}</small>
 
             </div>

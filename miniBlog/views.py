@@ -1,14 +1,15 @@
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from .form import *
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy,reverse
 
 
 def home(request):
     try:
-        blogs = BlogModel.objects.all()
+        blogs = BlogModel.objects.all().order_by('id')
         paginator = Paginator(blogs, 3)
         pages = paginator.page_range
         pageNumber = request.GET.get('page')
@@ -168,9 +169,14 @@ def blogDetail(request, slug):
     try:
         blog_obj = BlogModel.objects.filter(slug=slug).first()
         comments_obj=CommentModel.objects.filter(blog=blog_obj)
-        
+        liked=False
+        if blog_obj.likes.filter(id=request.user.id).exists():
+            liked=True
+        else:
+            liked=False
         context['blog_obj'] = blog_obj
         context['comments_obj'] = comments_obj
+        context['liked'] = liked
         
     except Exception as e:
         print(e)
@@ -351,9 +357,20 @@ def commentDelete(request,id):
 
 # Like Model Views
 
-# def likeAdd(request):
-#     pass
-
-# def likeRemove(request):
-#     pass
-
+def likePost(request,slug):
+    try:
+        print("inside try")
+        if request.user.is_authenticated:
+            post=get_object_or_404(BlogModel, id=request.POST['post_id'])
+            if post.likes.filter(id=request.user.id).exists():
+                post.likes.remove(request.user)
+            else:    
+                post.likes.add(request.user)
+            
+            print(post)
+            
+        else:
+            messages.error(request,'Please Login to like the post!')
+    except Exception as e:
+        print(e)
+    return HttpResponseRedirect(reverse('blog_detail',args=[str(slug)]))

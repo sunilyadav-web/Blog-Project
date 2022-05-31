@@ -21,6 +21,10 @@ class BlogModel(models.Model):
     user=models.ForeignKey(User, null=True, blank=True ,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     upload_to=models.DateTimeField(auto_now=True)
+    likes=models.ManyToManyField(User,blank=True, related_name='post_like')
+    @property
+    def totalLike(self):
+        return self.likes.count()
     
     def __str__(self):
         return self.title
