@@ -14,31 +14,27 @@
         <div class="text-content">
           {{blog_obj.content | safe}}
         </div>
-        <div class="like-and-share-section d-flex">
-          <div class="like">
+        <div class="like-and-share-section d-flex align-items-center">
             <form action="{% url 'post_like' blog_obj.slug %}" method="post">
               {% csrf_token %}
               {% if liked %}
-              <button type="submit" name="post_id" value="{{blog_obj.id}}" class="btn btn-primary btn-sm">UnLike</button>
+              <button type="submit" name="post_id" value="{{blog_obj.id}}"
+                class="btn btn-primary btn-sm">UnLike</button>
               {% else %}
 
               <button type="submit" name="post_id" value="{{blog_obj.id}}" class="btn btn-primary btn-sm">Like</button>
               {% endif %}
             </form>
-            <!-- <span class="like-btn" onclick="AddLike({{blog_obj.slug}})">like</span> -->
-            
+
             <span class="ms-2" id="count-like">{{blog_obj.totalLike}} Likes</span>
-          </div>
-          <div class="share">
-            <!-- <i id="like-icon" class='bx bx-like'> </i>-->
-            <!-- Button trigger Share modal -->
-            <button type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#share" onclick="getLink()">
-              <i class='bx bx-share'></i>
-            </button>
-          </div>
-          <div class="com">
-            <i class='bx bxs-comment'></i>
-          </div>
+            <div class="share d-flex align-imtes-center">
+              <!-- Button trigger Share modal -->
+              <button type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#share" onclick="getLink()">
+                <i class='bx bx-share'></i>
+              </button>
+            </div>
+            <!-- comment icon -->
+              <i class='bx bxs-comment'></i>
         </div>
         <div class="comment-section pt-3">
           <div class="count-comments mb-3 h6 text-start">
@@ -62,7 +58,9 @@
               <div class="comment-avatar-div me-3">
                 <img src="{{comment.profile.avatar.url}}" alt="" class="img me-3 rounded-circle">
               </div>
-              <h6><a class="text-decoration-none text-dark" href="{% url 'blog_publisher' comment.user.username%}">{{comment.user.first_name}} {{comment.user.last_name}}</a></h6>
+              <h6><a class="text-decoration-none text-dark"
+                  href="{% url 'blog_publisher' comment.user.username%}">{{comment.user.first_name}}
+                  {{comment.user.last_name}}</a></h6>
               <small class="ms-5 tex-sm mb-1 text-muted">{{comment.created_at | date}}</small>
 
             </div>
@@ -97,19 +95,20 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body py-5 ">
-       <div class="share-div mx-2">
-         <input type="text" readonly="" class="share-input ms-2"  id="share-input"><button class="copy-btn me-3" onclick="CopyShareLink()" id="liveToast">Copy</button>
-       </div>
-       
+        <div class="share-div mx-2">
+          <input type="text" readonly="" class="share-input ms-2" id="share-input"><button class="copy-btn me-3"
+            onclick="CopyShareLink()" id="liveToast">Copy</button>
+        </div>
+
       </div>
-      
+
     </div>
   </div>
 </div>
 
 
 <!-- Toaster Bootstrap -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3" >
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="..." class="rounded me-2" alt="...">
