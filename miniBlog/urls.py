@@ -19,6 +19,6 @@ urlpatterns = [
     path('<username>',blogPublisher,name='blog_publisher'),
     path('comment-add/<slug>',commentAdd,name='comment-add'),
     path('comment-delete/<id>',commentDelete,name='comment_delete'),
-    path('post-like/<slug>',likePost,name='post_like'),
-    path('follow-user',mefollow,name='follow_me'),
+    path('post-like/<str:slug>/',likePost,name='post_like'),
+    path('follow-user/',follow,name='follow'),
 ]

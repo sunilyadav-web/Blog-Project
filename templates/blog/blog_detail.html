@@ -87,11 +87,6 @@
     </div>
 </section>
 
-<form action="{% url 'follow_me' %}" method="post">
-  {% csrf_token %}
-      <button type="submit" name="f" value="{{request.user}}" class="follow-btn">Follow</button>
-</form>
-
 <!-- Modal -->
 <div class="modal fade " id="share" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
   aria-labelledby="shareLabel" aria-hidden="true">

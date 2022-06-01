@@ -189,9 +189,15 @@ def blogPublisher(request, username):
         user_obj = User.objects.get(username=username)
         if request.user.username == username:
             return redirect(profile)
+
         blogs = BlogModel.objects.filter(user=user_obj)
         profile_obj = Profile.objects.get(user=user_obj)
-        context = {'profile': profile_obj, 'blogs': blogs}
+        followed=False
+        if profile_obj.follower.filter(id=request.user.id):
+            followed=True
+        else:
+            followed=False
+        context = {'profile': profile_obj, 'blogs': blogs,'followed':followed}
     except Exception as e:
         print(e)
 
@@ -375,30 +381,20 @@ def likePost(request,slug):
         print(e)
     return HttpResponseRedirect(reverse('blog_detail',args=[str(slug)]))
 
-def followUser(request):
-    # try:
-    #     print('try block')
-    #     if request.user.is_authenticated:
-    #         print('auth is runing')
-    #         user=request.POST['follower']
-    #         profile_obj=Profile.objects.get(user=user)
-    #         print(profile_obj)
-    #         if profile_obj.follower.filter(id=request.user.id).exists():
-
-    #             profile_obj.follower.remove(request.user)
-    #             messages.success(request,'You have unfollow ')
-    #         else:
-    #             profile_obj.follower.add(request.user)
-    #             messages.success(request,'You have follow ')
-    #     else:
-    #         messages.error(request,'Please login!')
-    # except Exception as e:
-    #     print(e)
-    print('inisde follow function')
-    return redirect(home)
-    
-def mefollow(request):
-    print(request.user.username)
-    if request.method == 'post':
-        print('this is post section')
-    return redirect(home)
+def follow(request):
+    try:
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                profile_obj=get_object_or_404(Profile,id=request.POST['follower'])
+                if profile_obj.follower.filter(id=request.user.id).exists():
+                    profile_obj.follower.remove(request.user)
+                    messages.success(request,'You have unfollowed '+str(profile_obj.user.username))
+                else:
+                    profile_obj.follower.add(request.user)
+                    messages.success(request,'You have followed '+str(profile_obj.user.username))
+                return HttpResponseRedirect(reverse('blog_publisher',args=[str(profile_obj.user.username)]))
+        else:
+            messages.error(request,'Please login!')
+    except Exception as e:
+        print(e)
+    return redirect(home)    
