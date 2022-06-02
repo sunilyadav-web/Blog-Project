@@ -1,4 +1,5 @@
 {% extends './base.html' %} {% block start %}
+{% load static %}
 <div class="my-alert ">
   <div class="alert alert-danger  alert-dismissible fade show shadow d-none" id="alert" role="alert">
   <strong>Message : </strong><span id="message"></span>
@@ -28,7 +29,7 @@
           <button class="btn btn-primary" onclick="login()" id="login-btn">
             Sign in
           </button>
-
+          <span><a href="{% url 'forget_password' %}">Foreget password ?</a></span>
           <p class="text-center">
             <small class="text-muted text-center">Don't have an account yet?
               <a href="{% url 'register' %}">Sign Up </a></small>

@@ -27,3 +27,12 @@ def send_mail_to_user(token,email,domain):
     recipient_list=[email]
     send_mail(subject,message,from_email,recipient_list, fail_silently=True)
 
+def send_forget_email(token,email,domain):
+    status='Error'
+    subject="Please Click on link blow to foreget password"
+    message="Please Clink on this link to forget password page http://"+domain+"set-new-password/"+token
+    from_email=settings.EMAIL_HOST_USER
+    recipient_list=[email]
+    send_mail(subject,message,from_email,recipient_list,fail_silently=True)
+    status='success'
+    return status

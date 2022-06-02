@@ -1,3 +1,4 @@
+from tkinter import E
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from .form import *
@@ -5,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy,reverse
+from django.contrib.sites.shortcuts import get_current_site
+from .helpers import *
 
 
 def home(request):
@@ -51,6 +54,57 @@ def verify(request, token):
     except Exception as e:
         print(e)
 
+def forgetPassword(request):
+    try:
+        print('try block')
+        if request.method == 'POST':
+            print('printing inside post')
+            email=request.POST['email']
+            current_site=get_current_site(request)
+            token=generate_random_string(20)
+            user_obj=User.objects.get(email=email)
+            profile_obj=Profile.objects.get(user=user_obj)
+            profile_obj.token=token
+            profile_obj.save()
+            status=send_forget_email(token,email,current_site.domain)
+            if status =='success':
+                messages.success(request,'We have sent you email. Please check that out!')
+            
+            return redirect(forgetPassword)
+    except Exception as e:
+        print(e)
+    return render(request,'blog/forget_password.html')
+def setNewPassword(request,token):
+    try:
+        context={}        
+        profile_obj=Profile.objects.filter(token=token).first()
+        if profile_obj:
+            user_obj=User.objects.get(username=profile_obj.user.username)
+            context['user']=user_obj
+            return render(request,'blog/set_new_password.html',context)
+    except Exception as e:
+        print(e)
+    return HttpResponse("Bade request 404")
+
+def saveForgetPassword(request):
+    try:
+        if request.method == 'POST':
+            username=request.POST['username']
+            new_password=request.POST['new_password']
+            confirm_password=request.POST['confirom_password']
+            user_obj=User.objects.get(username=username)
+            if confirm_password == new_password:
+                print(new_password)
+                user_obj.password=new_password
+                user_obj.save()
+                print(user_obj.password)
+                messages.success(request,'Your Password has been changed succfully!')
+                return redirect(signin)
+            else:
+                messages.error(request,'Please enter Both same password')
+    except Exception as e:
+        print(e)
+    return HttpResponse('Bad request 404')
 
 def signout(request):
     try:

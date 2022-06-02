@@ -51,7 +51,7 @@ LoginView=LoginView.as_view()
 
 class RegisterView(APIView):
     
-    def post(self,request):
+    def post(self,request): 
         
         response={}
         response['status']=500
