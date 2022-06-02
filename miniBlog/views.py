@@ -46,7 +46,7 @@ def signin(request):
                     return redirect(signin) 
                 check_user=User.objects.filter(username=username).first()
                 if check_user is None:
-                    messages.error(request,'Invalid username not found. Please enter a valid username')
+                    messages.error(request,'Invalid username not found. Please enter a valid username.')
                     return redirect(signin)
                 user_obj=authenticate(username=username,password=password)
                 if user_obj:

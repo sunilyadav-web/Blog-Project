@@ -82,20 +82,6 @@ body{
     width: 100%;
     object-fit: cover;
   }
-  /* .avatar-change{
-    position: absolute;
-    background: none;
-    outline: none;    
-    border: none;
-    background-color: rgba(16, 16, 16, 0.426);
-    padding: 10px 0px;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
-    display: none;
-  }
-  
-   */
 
  
   .bio p{
@@ -201,6 +187,16 @@ align-items: center;
   font-size: 1rem;
   cursor: pointer;
 }
+.like-btn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  
+}
+.like-btn-color{
+  color: purple;
+}
 
 .-btn{
   background-color: transparent;
@@ -214,6 +210,12 @@ align-items: center;
   background-color: #ffffff;
   border-radius: 1px;
   padding: 3px 0px;
+}
+.share-btn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
 }
 .share-input{
   border: none;

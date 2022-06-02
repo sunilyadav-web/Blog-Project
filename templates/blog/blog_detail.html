@@ -18,11 +18,12 @@
             <form action="{% url 'post_like' blog_obj.slug %}" method="post">
               {% csrf_token %}
               {% if liked %}
+              {% comment %} This is unlike Btn {% endcomment %}
               <button type="submit" name="post_id" value="{{blog_obj.id}}"
-                class="btn btn-primary btn-sm">UnLike</button>
+                class="like-btn like-btn-color" data-bs-toggle="tooltip" data-bs-placement="top" title="Unlike"><i class='bx bxs-like' ></i></button>
               {% else %}
-
-              <button type="submit" name="post_id" value="{{blog_obj.id}}" class="btn btn-primary btn-sm">Like</button>
+              {% comment %} this like btn  {% endcomment %}
+              <button type="submit" name="post_id" value="{{blog_obj.id}}" class="like-btn" id="like-btn-color"  data-bs-toggle="tooltip" data-bs-placement="top" title="like"><i class='bx bx-like'></i></button>
               {% endif %}
             </form>
 

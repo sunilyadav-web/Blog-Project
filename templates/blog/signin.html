@@ -3,26 +3,23 @@
 {% load static %}
 
 {% block start %}
-<main class="p-3 p-sm-5 ">
+<main class="p-3 p-sm-5 mb-5">
     <div class="login  rounded text-light">
         <h2 class="heading mb-3 d-flex align-itmes-center justify-content-between"><a href="{% url 'home' %}"
                 class='btn btn-dark  d-flex align-items-center'><i class='bx bx-arrow-back me-2'></i>Back</a> Singin
         </h2>
-        {% comment %} {% if errormsg %}
-        <div class="alert alert-danger mb-3 myalert">{{errormsg}}</div>
-        {% endif %} {% endcomment %}
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'login' %}" onsubmit="login()">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="musername" class="form-label">UserName</label>
-                <input type="text" class="form-control" id="musername" name="username">
+                <label for="loginUsername" class="form-label">UserName</label>
+                <input type="text" class="form-control" id="loginUsername" name="username">
 
             </div>
 
             <div class="mb-3 pass-div">
-                <label for="pass" class="form-label">Password</label><span id="show-pass"><i class='bx bx-show' id="eye"
+                <label for="loginPassword" class="form-label">Password</label><span id="show-pass"><i class='bx bx-show' id="eye"
                         onclick="showpass()"></i></span>
-                <input type="password" class="form-control" id="pass" name="password">
+                <input type="password" class="form-control" id="loginPassword" name="password">
             </div>
 
             <button type="submit" class="btn btn-warning ">Singin</button>
