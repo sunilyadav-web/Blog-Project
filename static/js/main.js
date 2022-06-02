@@ -39,6 +39,27 @@ window.addEventListener("load",function (){
     year.innerHTML=today.getFullYear()
 })
 
+// Password show and hide Function
+
+state = false
+
+function showpass() {
+    const passInput = document.getElementById('pass')
+    const eye = document.getElementById('eye')
+    if (state) {
+        passInput.setAttribute('type', 'password')
+        state = false
+        eye.classList.add('bx-show')
+        eye.classList.remove('bx-hide')
+    } else {
+        eye.classList.add('bx-hide')
+        eye.classList.remove('bx-show')
+        passInput.setAttribute('type', 'text')
+        state = true
+    }
+
+}
+
 function login()
 {
     var username=document.getElementById('loginUsername').value

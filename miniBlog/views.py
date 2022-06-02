@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from .form import *
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import logout,login,authenticate
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy,reverse
 from django.contrib.sites.shortcuts import get_current_site
@@ -28,12 +28,36 @@ def home(request):
 
 
 def signin(request):
-    if request.user.is_authenticated:
-        messages.error(request, "You already Logged in!")
-        return redirect(home)
-    else:
-        return render(request, 'blog/login.html')
+    try:
+        if request.user.is_authenticated:
+            messages.error(request, "You already Logged in!")
+            return redirect(home)
+        else:
+            if request.method == 'POST':
+                username=request.POST['username']
+                password=request.POST['password']
+                
+                if username == '':
+                    messages.error(request,'Username is must')
+                    return redirect(signin) 
 
+                if password == '':
+                    messages.error(request,'Password is must')
+                    return redirect(signin) 
+                check_user=User.objects.filter(username=username).first()
+                if check_user is None:
+                    messages.error(request,'Invalid username not found. Please enter a valid username')
+                    return redirect(signin)
+                user_obj=authenticate(username=username,password=password)
+                if user_obj:
+                    login(request,user_obj)
+                    messages.success(request,'You are logged in successfully!')
+                    return redirect(home)
+                else:
+                    messages.error(request,'Please enter a right credentials!')
+    except Exception as e:
+        print(e)
+    return render(request, 'blog/signin.html')
 
 def register(request):
     if request.user.is_authenticated:
