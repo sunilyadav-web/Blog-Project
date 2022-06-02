@@ -70,6 +70,37 @@ function login()
     }
 }
 
+function checkUserName(val){
+    const CharacterLength=document.getElementById('character-length')
+    const submitBtn=document.getElementById('btn')
+    var usernameAlert=document.getElementById('alert')
+    var req=new XMLHttpRequest();
+    req.onload=function()
+    {
+        if (this.responseText === 'true')
+        {
+            console.log('true blog')
+            usernameAlert.remove('d-none')  
+            usernameAlert.innerHTML="Username Available"
+            submitBtn.disabled=false;
+        }else{
+            usernameAlert.innerHTML="Username Already Exist"
+            usernameAlert.classList.add('alert-danger')
+            usernameAlert.classList.remove('alert-success')
+            submitBtn.disabled=true;
+        }
+    }
+    if (val.length<4){
+        CharacterLength.classList.remove('d-none')
+        
+    }else if(val.length>=4)
+    {
+        
+        CharacterLength.classList.add('d-none')
+        req.open("GET","check-username?username="+val,true)
+    }
+}
+
 function register()
 {
     var customAlert=document.getElementById('alert')

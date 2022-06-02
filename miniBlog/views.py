@@ -59,6 +59,12 @@ def signin(request):
         print(e)
     return render(request, 'blog/signin.html')
 
+def checkUsername(request):
+    user_obj=User.objects.filter(username=request.GET['username'])
+    print('printing username'+request.GET['username'])
+    if not user_obj:
+        return HttpResponse('true')
+
 def register(request):
     if request.user.is_authenticated:
         messages.error(request, "Please logout then you can Signup!")

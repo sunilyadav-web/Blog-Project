@@ -7,44 +7,45 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
-  <div class="container pb-3" style="overflow-x: hidden;">
+  <div class="container pb-4 mb-5" style="overflow-x: hidden;">
 
     <div class="row justify-content-center">
       <div class="col-11 col-sm-5  p-3 rounded bg-light">
-        <div class="form-group mb-2">
-          <label class="form-label" for="registerUsername"> Username</label>
-          <input class="form-control" name="registerUsername" id="registerUsername" type="text"
-            placeholder="Choose unique username" autocomplete="off" required data-msg="Choose unique username">
-        </div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="fname">First Name</label>
-          <input class="form-control" name="fname" id="fname" type="text" placeholder="Enter Your First Name"
-            autocomplete="off" required data-msg="Enter Your First Name">
-        </div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="lname">Last Name</label>
-          <input class="form-control" name="lname" id="lname" type="text" placeholder="Enter Your Last Name"
-            autocomplete="off" required data-msg="Enter Your Last Name">
-        </div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="email"> Email Address</label>
-          <input class="form-control" name="email" id="email" type="email" placeholder="Enter Your Email"
-            autocomplete="off" required data-msg="Please enter your email">
-        </div>
-        <div class="form-group mb-4">
-          <div class="row">
-            <div class="col">
-              <label class="form-label" for="registerPassword"> Password</label>
-            </div>
+        <h4 class="h4 text-center my-2 mb-4"><a href="{% url 'home' %}" class="btn btn-dark text-light float-start back"><i class='bx bx-arrow-back me-2'></i>Back</a>Register</h4>
+        <!-- JavaScript Error Mesg -->
+        <div class="alert-success d-none alert" role="alert" id="alert">Available username</div>
+        <form action="#" method="post">
+          <div class="form-group mb-2">
+            <label class="form-label" for="username"> Username</label><small class="float-end me-2 text-danger d-none" id="character-length">*Minimum Length 4 Characters</small>
+            <input class="form-control" name="username" id="username" type="text"
+              placeholder="Choose unique username" autocomplete="off" required data-msg="Choose unique username" onkeyup="checkUserName(this.value)">
           </div>
-          <input class="form-control" name="registerPassword" id="registerPassword" placeholder="Password"
-            type="password" required data-msg="Please enter your password">
-        </div>
-        <!-- Submit-->
-        <button class="btn text-center btn-warning" onclick="register()">Sign Up</button>
+          <div class="form-group mb-2">
+            <label class="form-label" for="fname">First Name</label>
+            <input class="form-control" name="fname" id="fname" type="text" placeholder="Enter Your First Name"
+              autocomplete="off" required data-msg="Enter Your First Name">
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label" for="lname">Last Name</label>
+            <input class="form-control" name="lname" id="lname" type="text" placeholder="Enter Your Last Name"
+              autocomplete="off" required data-msg="Enter Your Last Name">
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label" for="email"> Email Address</label>
+            <input class="form-control" name="email" id="email" type="email" placeholder="Enter Your Email"
+              autocomplete="off" required data-msg="Please enter your email">
+          </div>
+          <div class="form-group mb-4">
+            <label class="form-label" for="password"> Password</label>
+            <input class="form-control" name="password" id="password" placeholder="Password"
+              type="password" required data-msg="Please enter your password">
+          </div>
+          <!-- Submit-->
+          <button type="submit" class="btn text-center btn-warning" onclick="register()" id="btn" disabled>Sign Up</button>
 
-        <p class="text-center"><small class="text-muted text-center">Already have account ?<a class="btn btn-secondary btn-sm ms-1"
-              href="{% url 'login' %}">Signin</a></small></p>
+          <p class="text-center"><small class="text-muted text-center">Already have account ?<a
+                class="btn btn-secondary btn-sm ms-1" href="{% url 'login' %}">Signin</a></small></p>
+        </form>
       </div>
     </div>
   </div>

@@ -6,6 +6,7 @@ urlpatterns = [
     path('',home,name='home'),
     path('login',signin,name='login'),
     path('signup',register,name='register'),
+    path('check-username',checkUsername,name='checkusername'),
     path('forget-password',forgetPassword,name='forget_password'),
     path('set-new-password/<token>',setNewPassword,name='set_new_password'),
     path('save-forget-password',saveForgetPassword,name='save_forget_password'),
