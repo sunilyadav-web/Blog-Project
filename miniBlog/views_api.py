@@ -8,46 +8,6 @@ from .models import *
 from django.contrib import messages
 from .helpers import *
 
-class LoginView(APIView):
-    
-    def post(self, request):
-        response={}
-        response['status']=500
-        response['message']='Something went wrong'
-
-        try:
-            data=request.data
-
-            if data.get('username') is None:
-                response['message']='Key unsername not found'
-                raise Exception("Key username not found")
-
-            if data.get('password') is None:
-                response['message']='Key Password not found'
-                raise Exception('Key Password not found')
-            check_user=User.objects.filter(username=data.get('username')).first()
-
-            if check_user is None:
-                response['message']='Invalid username not found. Please enter a valid username'
-                raise Exception('Invalid username not found. Please enter a valid username')
-
-            user_obj=authenticate(username=data.get('username'),password=data.get('password'))
-
-            if user_obj:
-                response['status']=200
-                response['message']='Welcome'
-                login(request,user_obj)
-                messages.success(request,'You are logged in successfully!')
-            else:
-                response['message']='Incorrect password, Please enter a correct password'
-                raise Exception('Incorrect password, Please enter a correct password')
-            
-        except Exception as e:
-            print(e)
-        return Response(response)
-
-
-LoginView=LoginView.as_view()
 
 class RegisterView(APIView):
     
