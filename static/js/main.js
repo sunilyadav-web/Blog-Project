@@ -100,46 +100,6 @@ function checkUserName(val) {
     }
 }
 
-function register() {
-    var customAlert = document.getElementById('alert')
-    var message = document.getElementById('message')
-    var username = document.getElementById('registerUsername').value
-    var fname = document.getElementById('fname').value
-    var lname = document.getElementById('lname').value
-    var email = document.getElementById('email').value
-    var password = document.getElementById('registerPassword').value
-    var csrf = document.getElementById('csrf').value
-    const inputGroup = document.querySelectorAll('.form-control')
-    if (username == '' && password == '') {
-        alert("Enter must both")
-    }
-
-    data = {
-        'username': username,
-        'fname': fname,
-        'lname': lname,
-        'email': email,
-        'password': password,
-    }
-    url = '/api/register'
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // 'X-Csrftoken':csrf,
-        }, body: JSON.stringify(data)
-
-    }).then(result => result.json())
-        .then(response => {
-            console.log(response)
-            if (response.status == 200) {
-
-            }
-
-        })
-
-}
-
 function editProfile() {
 
     let username = document.getElementById('username')
