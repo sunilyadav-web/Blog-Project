@@ -14,7 +14,8 @@
         <h4 class="h4 text-center my-2 mb-4 "><a href="{% url 'home' %}" class="btn btn-dark text-light float-start back"><i class='bx bx-arrow-back me-2'></i>Back</a>Register</h4>
         <!-- JavaScript Error Mesg -->
         <div class="d-none alert" role="alert" id="username-alert"></div>
-        <form action="#" method="post">
+        <form action="{% url 'register' %}" method="post">
+          {% csrf_token %}
           <div class="form-group mb-2">
             <label class="form-label" for="username"> Username</label><small class="float-end me-2 text-danger d-none" id="character-length">*Minimum Length 4 Characters</small>
             <input class="form-control" name="username" id="username" type="text"
@@ -41,7 +42,7 @@
               type="password" required data-msg="Please enter your password">
           </div>
           <!-- Submit-->
-          <button type="submit" class="btn text-center btn-warning" onclick="register()" id="btn" disabled>Sign Up</button>
+          <button type="submit" class="btn text-center btn-warning" id="btn" disabled>Sign Up</button>
 
           <p class="text-center"><small class="text-muted text-center">Already have account ?<a
                 class="btn btn-secondary btn-sm ms-1" href="{% url 'login' %}">Signin</a></small></p>

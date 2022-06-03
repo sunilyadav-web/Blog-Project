@@ -22,7 +22,7 @@ def generate_slug(text):
     
 def send_mail_to_user(token,email,domain):
     subject="Your account need to be verified"
-    message="Hi paste the link to verify account http://"+domain+"/verify/"+token
+    message="Hi paste the link to verify account http://"+domain+"verify/"+token
     from_email=settings.EMAIL_HOST_USER
     recipient_list=[email]
     send_mail(subject,message,from_email,recipient_list, fail_silently=True)

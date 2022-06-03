@@ -51,7 +51,9 @@ def signin(request):
                 user_obj=authenticate(username=username,password=password)
                 if user_obj:
                     login(request,user_obj)
-                    messages.success(request,'You are logged in successfully!')
+                    profile_obj=Profile.objects.get(user=user_obj)
+                    if profile_obj.is_varified:
+                        messages.success(request,'You are logged in successfully!')
                     return redirect(home)
                 else:
                     messages.error(request,'Please enter a right credentials!')
@@ -61,18 +63,56 @@ def signin(request):
 
 def checkUsername(request):
     user_obj=User.objects.filter(username=request.GET['username'])
-    print('printing username'+request.GET['username'])
     if user_obj:
         return HttpResponse('false')
     else:
         return HttpResponse('true')
 
 def register(request):
-    if request.user.is_authenticated:
-        messages.error(request, "Please logout then you can Signup!")
-        return redirect(home)
-    else:
-        return render(request, 'blog/register.html')
+    try:
+        if request.user.is_authenticated:
+            messages.error(request, "Please logout then you can Signup!")
+            return redirect(home)
+        else:
+            if request.method == "POST":
+                username=request.POST['username']
+                fname=request.POST['fname']
+                lname=request.POST['lname']
+                email=request.POST['email']
+                password=request.POST['password']
+                if username == '':
+                    messages.error(request,'Username is must!')
+                    return redirect(register)
+                elif fname == '':
+                    messages.error(request,'First is must!')
+                    return redirect(register)
+                elif lname == '':
+                    messages.error(request,'Last name is must!')
+                    return redirect(register)
+                elif email == '':
+                    messages.error(request,'Email is must!')
+                    return redirect(register)
+                elif password == '':
+                    messages.error(request,'password is must!')
+                    return redirect(register)
+                else:
+                    user_obj=User.objects.create(username=username)
+                    user_obj.set_password(password)
+                    user_obj.first_name=fname
+                    user_obj.last_name=lname
+                    user_obj.email=email
+                    user_obj.save()
+
+                    token=generate_random_string(20)
+                    Profile.objects.create(user=user_obj,token=token)
+                    current_site=get_current_site(request)
+                    send_mail_to_user(token,email,current_site.domain)
+                    messages.success(request,'User Created sucessfully! Please check your email in order to activate your account')
+                    return redirect(home)
+    except Exception as e:
+        print(e)
+
+    return render(request, 'blog/register.html')
 
 
 def verify(request, token):
@@ -82,6 +122,7 @@ def verify(request, token):
         if profile_obj:
             profile_obj.is_varified = True
             profile_obj.save()
+            messages.success(request,'Your account has been activated successfully! Please login.')
         return redirect(signin)
     except Exception as e:
         print(e)
