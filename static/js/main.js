@@ -11,14 +11,13 @@ function scrollHeader() {
 }
 window.addEventListener('scroll', scrollHeader)
 
-function loginWithEnter()
-{
-    var pass=document.getElementById('loginPassword')
-    pass.addEventListener("keypress",function(event){
-        if (event.key === "Enter"){
+function loginWithEnter() {
+    var pass = document.getElementById('loginPassword')
+    pass.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
             event.preventDefault();
 
-                document.getElementById('login-btn').click()
+            document.getElementById('login-btn').click()
         }
     })
 }
@@ -26,17 +25,17 @@ function loginWithEnter()
 
 // Add class for active navbar links
 
-window.addEventListener("load",e=>{
+window.addEventListener("load", e => {
     let text = window.location;
     console.log(text.stringify)
 })
 
 // getting year for footer
 
-window.addEventListener("load",function (){
-    const year=document.getElementById('year')
-    today=new Date()
-    year.innerHTML=today.getFullYear()
+window.addEventListener("load", function () {
+    const year = document.getElementById('year')
+    today = new Date()
+    year.innerHTML = today.getFullYear()
 })
 
 // Password show and hide Function
@@ -60,114 +59,113 @@ function showpass() {
 
 }
 
-function login()
-{
-    var username=document.getElementById('loginUsername').value
-    var password=document.getElementById('loginPassword').value
-    
-    if (username =='' && password ==''){
+function login() {
+    var username = document.getElementById('loginUsername').value
+    var password = document.getElementById('loginPassword').value
+
+    if (username == '' && password == '') {
         alert("Enter must both")
     }
 }
 
-function checkUserName(val){
-    const CharacterLength=document.getElementById('character-length')
-    const submitBtn=document.getElementById('btn')
-    var usernameAlert=document.getElementById('alert')
-    var req=new XMLHttpRequest();
-    req.onload=function()
-    {
-        if (this.responseText === 'true')
-        {
-            console.log('true blog')
-            usernameAlert.remove('d-none')  
-            usernameAlert.innerHTML="Username Available"
-            submitBtn.disabled=false;
-        }else{
-            usernameAlert.innerHTML="Username Already Exist"
-            usernameAlert.classList.add('alert-danger')
-            usernameAlert.classList.remove('alert-success')
-            submitBtn.disabled=true;
-        }
-    }
-    if (val.length<4){
+function checkUserName(val) {
+    const CharacterLength = document.getElementById('character-length')
+    const submitBtn = document.getElementById('btn')
+    var usernameAlert = document.getElementById('username-alert')
+
+    if (val.length < 4) {
         CharacterLength.classList.remove('d-none')
-        
-    }else if(val.length>=4)
-    {
-        
+        usernameAlert.classList.add('d-none')
+        submitBtn.disabled = true;
+    } if (val.length >= 4) {
         CharacterLength.classList.add('d-none')
-        req.open("GET","check-username?username="+val,true)
+        var req = new XMLHttpRequest();
+       
+        req.onload = function () {
+            if (this.responseText === 'true') {
+                usernameAlert.classList.remove('d-none')
+                usernameAlert.classList.add('alert-success')
+                usernameAlert.classList.remove('alert-danger')
+                usernameAlert.innerHTML = "Username Available"
+                submitBtn.disabled = false;
+            } else {
+                usernameAlert.innerHTML = "Username Already Exist"
+                usernameAlert.classList.add('alert-danger')
+                usernameAlert.classList.remove('alert-success')
+                submitBtn.disabled = true;
+            }
+        }
+        req.open("GET", "check-username?username=" + val, true);
+        req.send();
     }
 }
 
-function register()
-{
-    var customAlert=document.getElementById('alert')
-    var message=document.getElementById('message')
-    var username=document.getElementById('registerUsername').value
-    var fname=document.getElementById('fname').value
-    var lname=document.getElementById('lname').value
-    var email=document.getElementById('email').value
-    var password=document.getElementById('registerPassword').value
-    var csrf=document.getElementById('csrf').value
-    const inputGroup=document.querySelectorAll('.form-control')
-    if (username =='' && password ==''){
+function register() {
+    var customAlert = document.getElementById('alert')
+    var message = document.getElementById('message')
+    var username = document.getElementById('registerUsername').value
+    var fname = document.getElementById('fname').value
+    var lname = document.getElementById('lname').value
+    var email = document.getElementById('email').value
+    var password = document.getElementById('registerPassword').value
+    var csrf = document.getElementById('csrf').value
+    const inputGroup = document.querySelectorAll('.form-control')
+    if (username == '' && password == '') {
         alert("Enter must both")
     }
 
-    data={
+    data = {
         'username': username,
         'fname': fname,
         'lname': lname,
         'email': email,
         'password': password,
     }
-    url='/api/register'
-    fetch(url,{
-        method :'POST',
-        headers:{
-            'Content-Type':'application/json',
+    url = '/api/register'
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
             // 'X-Csrftoken':csrf,
-        },body:JSON.stringify(data)
+        }, body: JSON.stringify(data)
 
-    }).then(result=>result.json())
-    .then(response=>{
-        console.log(response)
-        if(response.status == 200){
-          
-        }
-        
-    })
+    }).then(result => result.json())
+        .then(response => {
+            console.log(response)
+            if (response.status == 200) {
+
+            }
+
+        })
 
 }
 
-function editProfile(){
-    
-    let username=document.getElementById('username')
-    let fname=document.getElementById('fname')
-    let lname=document.getElementById('lname')
-    let email=document.getElementById('email')
-    let bio=document.getElementById('bio')
-    url='/api/get-profile'
-    fetch(url,{
-        method :'GET',
-        headers:{
-            'Content-Type':'application/json',
+function editProfile() {
+
+    let username = document.getElementById('username')
+    let fname = document.getElementById('fname')
+    let lname = document.getElementById('lname')
+    let email = document.getElementById('email')
+    let bio = document.getElementById('bio')
+    url = '/api/get-profile'
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
         }
 
-    }).then(result=>result.json())
-    .then(response=>{
-        if(response.status == 200){
-            username.value=response.username
-            fname.value=response.fname
-            lname.value=response.lname
-            email.value=response.email
-            bio.value=response.bio
-            countChracters(response.bio)
-        }
-        console.log(response)
-    })
+    }).then(result => result.json())
+        .then(response => {
+            if (response.status == 200) {
+                username.value = response.username
+                fname.value = response.fname
+                lname.value = response.lname
+                email.value = response.email
+                bio.value = response.bio
+                countChracters(response.bio)
+            }
+            console.log(response)
+        })
 
 }
 
@@ -175,51 +173,49 @@ function editProfile(){
 // Count Character of Profile bio 
 
 
-function countChracters(value)
-{
-    const bio=document.getElementById('bio')
-    let characterLen=document.getElementById('lenght')
-    let bioError=document.getElementById('bio-error')
-    const bioLength=value.length
-    if (bioLength>150)
-    {
-        console.log('length exceeds',bioLength)
+function countChracters(value) {
+    const bio = document.getElementById('bio')
+    let characterLen = document.getElementById('lenght')
+    let bioError = document.getElementById('bio-error')
+    const bioLength = value.length
+    if (bioLength > 150) {
+        console.log('length exceeds', bioLength)
         bioError.classList.remove("d-none")
         bio.classList.add("disabled")
-    }else{
-        characterLen.innerHTML=bioLength
+    } else {
+        characterLen.innerHTML = bioLength
         bio.classList.remove("disabled")
         bioError.classList.add("d-none")
     }
 }
 
-window.onload=function(){
-    try{
-    const text=document.getElementById('message')
-    const alert=document.getElementById('alert')
-    const c=alert.classList[1]
-    if (c=='alert-success'){
-            text.innerHTML="Success : "       
-    } else if(c=='alert-danger'){
-        text.innerHTML="Error : "
-    }else if(c=='alert-warning'){
-        text.innerHTML="Warning : "
+window.onload = function () {
+    try {
+        const text = document.getElementById('message')
+        const alert = document.getElementById('alert')
+        const c = alert.classList[1]
+        if (c == 'alert-success') {
+            text.innerHTML = "Success : "
+        } else if (c == 'alert-danger') {
+            text.innerHTML = "Error : "
+        } else if (c == 'alert-warning') {
+            text.innerHTML = "Warning : "
+        }
     }
-  }
-    catch{
-        
-    } 
+    catch {
+
+    }
 }
 
-function btnEnable(val){
-    const commentCancel=document.getElementById('comment-cancel')
-    const commentSubmit=document.getElementById('comment-submit')
+function btnEnable(val) {
+    const commentCancel = document.getElementById('comment-cancel')
+    const commentSubmit = document.getElementById('comment-submit')
 
-    if (val != ''){
+    if (val != '') {
         commentCancel.classList.remove('disabled')
         commentSubmit.classList.remove('disabled')
-    }else{
-        
+    } else {
+
         commentCancel.classList.add('disabled')
         commentSubmit.classList.add('disabled')
     }
@@ -230,105 +226,100 @@ var id;
 
 // get comment data
 
-function EditComment(val)
-{
-    this.id=val
-    const commentCancel=document.getElementById('comment-cancel')
-    const commentSubmit=document.getElementById('comment-submit')
-    const comment=document.getElementById('comment'),
-    commentForm=document.getElementById('comment-form')
+function EditComment(val) {
+    this.id = val
+    const commentCancel = document.getElementById('comment-cancel')
+    const commentSubmit = document.getElementById('comment-submit')
+    const comment = document.getElementById('comment'),
+        commentForm = document.getElementById('comment-form')
 
-url='/api/get-comment?id='+val
-    fetch(url,{
-        method :'GET',
-        headers:{
-            'Content-Type':'application/json',
+    url = '/api/get-comment?id=' + val
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
         }
 
-    }).then(result=>result.json())
-    .then(response=>{
-       if (response.status==200)
-       {
-           comment.value=response.comment
-            commentSubmit.classList.remove('disabled')
-            commentCancel.classList.remove('disabled')
-            commentSubmit.innerHTML='Save'
-            commentForm.addEventListener("submit",e=>{
-                e.preventDefault();
-            })
-       }
-    })
+    }).then(result => result.json())
+        .then(response => {
+            if (response.status == 200) {
+                comment.value = response.comment
+                commentSubmit.classList.remove('disabled')
+                commentCancel.classList.remove('disabled')
+                commentSubmit.innerHTML = 'Save'
+                commentForm.addEventListener("submit", e => {
+                    e.preventDefault();
+                })
+            }
+        })
 
-commentCancel.addEventListener('click',function (){
+    commentCancel.addEventListener('click', function () {
 
-    commentCancel.classList.add('disabled')
-    commentSubmit.classList.add('disabled')
-    commentSubmit.innerHTML='Submit'
-    commentForm.addEventListener("submit",e=>{
-        document.location.reload
+        commentCancel.classList.add('disabled')
+        commentSubmit.classList.add('disabled')
+        commentSubmit.innerHTML = 'Submit'
+        commentForm.addEventListener("submit", e => {
+            document.location.reload
+        })
     })
-})
 
 }
 
 // send edited comment to server
 
-function UpdataComment()
-{
+function UpdataComment() {
 
-    var csrf=document.getElementById('csrf').value
-    var customAlert=document.getElementById('alert')
-    var message=document.getElementById('message')
-    var comment=document.getElementById('comment').value
-    var id=this.id
+    var csrf = document.getElementById('csrf').value
+    var customAlert = document.getElementById('alert')
+    var message = document.getElementById('message')
+    var comment = document.getElementById('comment').value
+    var id = this.id
     console.log(id)
-    data={
+    data = {
         'comment': comment,
-        'id':id,
+        'id': id,
     }
-    url='/api/update-comment'
-    fetch(url,{
-        method :'POST',
-        headers:{
-            'Content-Type':'application/json',
-            'X-Csrftoken':csrf,
-        },body:JSON.stringify(data)
+    url = '/api/update-comment'
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Csrftoken': csrf,
+        }, body: JSON.stringify(data)
 
-    }).then(result=>result.json())
-    .then(response=>{
-        if(response.status == 200){
-            console.log(response)
-            document.location.reload()
-        }
-        if(response.status ==500){
-            customAlert.classList.remove('d-none')
-            message.innerHTML=response.message   
-            document.location.reload()
-        }
-    })
+    }).then(result => result.json())
+        .then(response => {
+            if (response.status == 200) {
+                console.log(response)
+                document.location.reload()
+            }
+            if (response.status == 500) {
+                customAlert.classList.remove('d-none')
+                message.innerHTML = response.message
+                document.location.reload()
+            }
+        })
 }
 
 
 // =====Share Link Script========
 
 var shareLink;
-function getLink()
-{
-    var shareInput=document.getElementById('share-input')
-    this.shareLink=window.location.href
-    shareInput.value=this.shareLink
+function getLink() {
+    var shareInput = document.getElementById('share-input')
+    this.shareLink = window.location.href
+    shareInput.value = this.shareLink
 }
-function CopyShareLink()
-{
-    let link=document.getElementById('share-input')
+function CopyShareLink() {
+    let link = document.getElementById('share-input')
     console.log('this is link', link)
-     /* Select the text field */
-  link.select();
-  link.setSelectionRange(0, 99999); /* For mobile devices */
+    /* Select the text field */
+    link.select();
+    link.setSelectionRange(0, 99999); /* For mobile devices */
 
-   /* Copy the text inside the text field */
-  navigator.clipboard.writeText(link.value);
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(link.value);
 
-  /* Alert the copied text */
-  alert("Copied the text: " + link.value);
+    /* Alert the copied text */
+    alert("Copied the text: " + link.value);
 }

@@ -62,7 +62,9 @@ def signin(request):
 def checkUsername(request):
     user_obj=User.objects.filter(username=request.GET['username'])
     print('printing username'+request.GET['username'])
-    if not user_obj:
+    if user_obj:
+        return HttpResponse('false')
+    else:
         return HttpResponse('true')
 
 def register(request):
