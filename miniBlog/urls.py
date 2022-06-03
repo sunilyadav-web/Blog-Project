@@ -17,6 +17,7 @@ urlpatterns = [
     path('update-blog<slug>',updateBlog,name='updateblog'),
     path('delete-blog<slug>',deleteBlog,name='deleteblog'),
     path('verify/<token>',verify,name='verify'),
+    path('email-verify/<token>',emailVerify,name='email_verify'),
     path('profile',profile,name='profile'),
     path('edit-profile',profileUpdate,name='profile_update'),
     path('search',search,name='search'),

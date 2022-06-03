@@ -36,3 +36,12 @@ def send_forget_email(token,email,domain):
     send_mail(subject,message,from_email,recipient_list,fail_silently=True)
     status='success'
     return status
+def sendMailForEmailVerification(token,email,domain):
+    status='error'
+    subject='Please Verify your Email by clicking link below'
+    message="Click here to verify email http://"+domain+"email-verify/"+token
+    from_email=settings.EMAIL_HOST_USER
+    recipient_list=[email]
+    send_mail(subject,message,from_email,recipient_list,fail_silently=True)
+    status='success'
+    return status

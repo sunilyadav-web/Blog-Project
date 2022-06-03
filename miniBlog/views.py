@@ -22,6 +22,8 @@ def home(request):
         verify = profile.is_varified
         if not verify:
             messages.warning(request, 'Please verify your Account!')
+        if not profile.is_email_varified:
+            messages.warning(request,'Please Verify your Email')
     except Exception as e:
         print(e)
     return render(request, 'blog/home.html', context)
@@ -127,11 +129,25 @@ def verify(request, token):
     except Exception as e:
         print(e)
 
+def emailVerify(request,token):
+    try:
+        print('inside try block')
+        profile_obj = Profile.objects.filter(token=token).first()
+        
+        if profile_obj:
+            profile_obj.is_email_varified= True
+            profile_obj.save()
+            messages.success(request,"Your email verification has been completed successfully!")
+        else:
+            messages.error(request,'Something went wrong.')
+    except Exception as e:
+        print(e)
+    return redirect(home)
+        
 def forgetPassword(request):
     try:
         print('try block')
         if request.method == 'POST':
-            print('printing inside post')
             email=request.POST['email']
             current_site=get_current_site(request)
             token=generate_random_string(20)
@@ -167,10 +183,8 @@ def saveForgetPassword(request):
             confirm_password=request.POST['confirom_password']
             user_obj=User.objects.get(username=username)
             if confirm_password == new_password:
-                print(new_password)
                 user_obj.password=new_password
                 user_obj.save()
-                print(user_obj.password)
                 messages.success(request,'Your Password has been changed succfully!')
                 return redirect(signin)
             else:
@@ -232,7 +246,16 @@ def profileUpdate(request):
                     user.last_name = lname
 
                 if email:
-                    user.email = email
+                    if not user.email == email :
+                        current_site=get_current_site(request)
+                        token=generate_random_string(20)
+                        profile_obj.token=token
+                        profile_obj.save()
+                        status=sendMailForEmailVerification(token,email,current_site.domain)
+                        if status == 'success':
+                            messages.success(request,"Please Check your Email to verify eamil")
+                            user.email=email
+                            profile_obj.is_email_varified=False
 
                 if request.FILES.get('avatar'):
                     profile_obj.avatar = request.FILES['avatar']

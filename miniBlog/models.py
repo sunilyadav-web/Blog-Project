@@ -7,6 +7,7 @@ from .helpers import *
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     is_varified=models.BooleanField(default=False)
+    is_email_varified=models.BooleanField(default=True)
     token=models.CharField(max_length=100)
     avatar=models.ImageField(null=True, upload_to='blog' ,default='../static/img/user.png')
     bio=models.TextField(max_length=150, null=True , blank=True, default="this is bio")
