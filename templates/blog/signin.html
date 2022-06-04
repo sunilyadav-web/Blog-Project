@@ -1,6 +1,5 @@
 {% extends './base.html' %}
-{% load socialaccount %}
-{% providers_media_js %}
+
 {% block start %}
 <main class="p-3 p-sm-5 mb-5">
     <div class="login  rounded text-light">
@@ -31,9 +30,6 @@
           </span>  
         </div>
     </div>
-    <div class="social-login">
-        <a href="{% provider_login_url "facebook" method="oauth2" %}">Facebook</a>
-        <a href="{% provider_login_url "google" %}">Google</a>
-    </div>
+
 </main>
 {% endblock %}
