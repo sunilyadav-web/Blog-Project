@@ -8,16 +8,22 @@ from django.core.paginator import Paginator
 from django.urls import reverse_lazy,reverse
 from django.contrib.sites.shortcuts import get_current_site
 from .helpers import *
+from django.db.models import Max, Count
 
 
 def home(request):
+    context={}
     try:
         blogs = BlogModel.objects.all().order_by('id')
+        q=BlogModel.objects.annotate(num_likes=Max('likes')).filter(likes=3)
+        maxlikes=blogs.aggregate(Max('likes'))
+        print(maxlikes)
+        featured_blog=BlogModel.objects.filter(likes=maxlikes['likes__max']).first()
         paginator = Paginator(blogs, 3)
         pages = paginator.page_range
         pageNumber = request.GET.get('page')
         finalBlogpage = paginator.get_page(pageNumber)
-        context = {'blogs': finalBlogpage, 'pages': pages}
+        context = {'blogs': finalBlogpage, 'pages': pages, 'featured_blog':featured_blog}
         profile = Profile.objects.get(user=request.user)
         verify = profile.is_varified
         if not verify:
