@@ -152,12 +152,14 @@ def emailVerify(request,token):
         
 def forgetPassword(request):
     try:
-        print('try block')
         if request.method == 'POST':
             email=request.POST['email']
+            user_obj=User.objects.get(email=email)
+            if not user_obj:
+                messages.error(request,'Please Enter Your verified Email')
+                return redirect(forgetPassword)
             current_site=get_current_site(request)
             token=generate_random_string(20)
-            user_obj=User.objects.get(email=email)
             profile_obj=Profile.objects.get(user=user_obj)
             profile_obj.token=token
             profile_obj.save()
@@ -189,7 +191,7 @@ def saveForgetPassword(request):
             confirm_password=request.POST['confirom_password']
             user_obj=User.objects.get(username=username)
             if confirm_password == new_password:
-                user_obj.password=new_password
+                user_obj.set_password(confirm_password)
                 user_obj.save()
                 messages.success(request,'Your Password has been changed succfully!')
                 return redirect(signin)
