@@ -179,9 +179,12 @@ def setNewPassword(request,token):
             user_obj=User.objects.get(username=profile_obj.user.username)
             context['user']=user_obj
             return render(request,'blog/set_new_password.html',context)
+        else:
+            return HttpResponse('''<h2>Your forget password request has been expired. Please Request Again.</h2> <a href="/forget-password">For New Request Click here</a>''')
+            
     except Exception as e:
         print(e)
-    return HttpResponse("Bade request 404")
+    return HttpResponse("<h2>Bade request 404</h2>")
 
 def saveForgetPassword(request):
     try:
@@ -190,9 +193,14 @@ def saveForgetPassword(request):
             new_password=request.POST['new_password']
             confirm_password=request.POST['confirom_password']
             user_obj=User.objects.get(username=username)
+            profile_obj=Profile.objects.get(user=user_obj)
             if confirm_password == new_password:
                 user_obj.set_password(confirm_password)
                 user_obj.save()
+                token=generate_random_string(20)
+                profile_obj.token=token
+                profile_obj.save()
+
                 messages.success(request,'Your Password has been changed succfully!')
                 return redirect(signin)
             else:
