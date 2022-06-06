@@ -165,7 +165,7 @@ def forgetPassword(request):
             profile_obj.save()
             status=send_forget_email(token,email,current_site.domain)
             if status =='success':
-                messages.success(request,'We have sent you email. Please check that out!')
+                messages.success(request,'We have sent you email. Please check that out! ')
             
             return redirect(forgetPassword)
     except Exception as e:

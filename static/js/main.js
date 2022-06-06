@@ -80,7 +80,7 @@ function checkUserName(val) {
     } if (val.length >= 4) {
         CharacterLength.classList.add('d-none')
         var req = new XMLHttpRequest();
-       
+
         req.onload = function () {
             if (this.responseText === 'true') {
                 usernameAlert.classList.remove('d-none')
@@ -282,4 +282,47 @@ function CopyShareLink() {
 
     /* Alert the copied text */
     alert("Copied the text: " + link.value);
+}
+
+
+// ============FORGET PASSWORD============
+function forgetPassword(val) {
+    var pass = document.getElementById('pass1').value
+    var cpass = document.getElementById('pass2').value
+    var warning = document.getElementById('warning')
+    var btn = document.getElementById('btn')
+
+    if (pass == cpass && pass.length > 3) {
+        console.log(pass)
+        btn.disabled = false
+        warning.classList.add('d-none')
+    }
+    if (pass != cpass || pass.length < 3) {
+        warning.classList.add('text-danger')
+        warning.classList.remove('d-none')
+        warning.innerHTML = 'Both Password must be same'
+        btn.disabled = true
+    }
+}
+
+function forgetPasswordWarning() {
+    var pass = document.getElementById('pass1').value
+    var cpass = document.getElementById('pass2').value
+    var btn = document.getElementById('btn')
+    var lenghtWarning = document.getElementById('length-warning')
+    var warning = document.getElementById('warning')
+
+    if (pass.length < 4) {
+        lenghtWarning.classList.remove('d-none')
+        lenghtWarning.innerHTML = '*Minimum Lenght 4'
+        btn.disabled = true
+
+    } else {
+        lenghtWarning.classList.add('d-none')
+    }
+    if (pass == cpass && pass.length > 3) {
+        btn.disabled = false
+        warning.classList.add('d-none')
+    }
+
 }
