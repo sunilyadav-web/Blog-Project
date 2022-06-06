@@ -14,8 +14,9 @@ from django.db.models import Max, Count
 def home(request):
     context={}
     try:
-        blogs = BlogModel.objects.all().order_by('id')
+        blogs = BlogModel.objects.all().order_by('-id')
         q=BlogModel.objects.annotate(num_likes=Max('likes')).filter(likes=3)
+        
         maxlikes=blogs.aggregate(Max('likes'))
         print(maxlikes)
         featured_blog=BlogModel.objects.filter(likes=maxlikes['likes__max']).first()
@@ -374,7 +375,7 @@ def seeBlogs(request):
     if request.user.is_authenticated:
         context = {}
         try:
-            blog_objs = BlogModel.objects.filter(user=request.user)
+            blog_objs = BlogModel.objects.filter(user=request.user).order_by('-id')
             context['blog_objs'] = blog_objs
         except Exception as e:
             print(e)
