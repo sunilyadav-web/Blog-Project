@@ -455,14 +455,9 @@ def search(request):
                 messages.warning(
                     request, 'No search results found. Please refine your query')
             else:
-                p = Paginator(search_blogs, 3)
-                pages = p.page_range
-                pageNumber = request.GET.get('page')
-                finalsearchpages = p.get_page(pageNumber)
-                context['search_blogs'] = finalsearchpages
+                context['search_blogs'] = search_blogs
 
         context['query'] = query
-        context['pages'] = pages
     except Exception as e:
         print(e)
 
