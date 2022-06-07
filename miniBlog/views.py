@@ -38,6 +38,7 @@ def home(request):
         if not profile.is_email_varified:
             messages.warning(request,'Please Verify your Email')
     except Exception as e:
+        print('Printing Home Exception')
         print(e)
     return render(request, 'blog/home.html', context)
 
@@ -73,6 +74,7 @@ def signin(request):
                 else:
                     messages.error(request,'Please enter a right credentials!')
     except Exception as e:
+        print('Printing signin Exception')
         print(e)
     return render(request, 'blog/signin.html')
 
@@ -125,6 +127,7 @@ def register(request):
                     messages.success(request,'User Created sucessfully! Please check your email in order to activate your account')
                     return redirect(home)
     except Exception as e:
+        print('Printing Register Exception')
         print(e)
 
     return render(request, 'blog/register.html')
@@ -140,6 +143,7 @@ def verify(request, token):
             messages.success(request,'Your account has been activated successfully! Please login.')
         return redirect(signin)
     except Exception as e:
+        print('Printing verify Exception')
         print(e)
 
 def emailVerify(request,token):
@@ -154,6 +158,7 @@ def emailVerify(request,token):
         else:
             messages.error(request,'Something went wrong.')
     except Exception as e:
+        print('Printing EmailVerify Exception')
         print(e)
     return redirect(home)
         
@@ -176,6 +181,7 @@ def forgetPassword(request):
             
             return redirect(forgetPassword)
     except Exception as e:
+        print('Printing forget password Exception')
         print(e)
     return render(request,'blog/forget_password.html')
 def setNewPassword(request,token):
@@ -190,6 +196,7 @@ def setNewPassword(request,token):
             return HttpResponse('''<h2>Your forget password request has been expired. Please Request Again.</h2> <a href="/forget-password">For New Request Click here</a>''')
             
     except Exception as e:
+        print('Printing Set New Password Exception')
         print(e)
     return HttpResponse("<h2>Bade request 404</h2>")
 
@@ -213,6 +220,7 @@ def saveForgetPassword(request):
             else:
                 messages.error(request,'Please enter Both same password')
     except Exception as e:
+        print('Printing Save New Password Exception')
         print(e)
     return HttpResponse('Bad request 404')
 
@@ -226,6 +234,7 @@ def signout(request):
             messages.error(request, "Please Login!")
             return redirect(signin)
     except Exception as e:
+
         print(e)
         messages.error(request, 'something went wrong')
         return redirect(home)
@@ -244,6 +253,7 @@ def profile(request):
             messages.error(request, "Please Login!")
             return redirect(home)
     except Exception as e:
+        print('Printing Profile Exception')
         print(e)
 
 
@@ -300,6 +310,7 @@ def profileUpdate(request):
             messages.error(request, "Please Login!")
             return redirect(home)
     except Exception as e:
+        print('Printing Update Exception')
         print(e)
 
     return redirect(profile)
@@ -330,6 +341,7 @@ def addBlog(request):
                 messages.success(request, 'Your Blog Published successfully!')
                 redirect(addBlog)
         except Exception as e:
+            print('Printing Add blog Exception')
             print(e)
         return render(request, 'blog/add_blog.html', context)
     else:
@@ -352,6 +364,7 @@ def blogDetail(request, slug):
         context['liked'] = liked
         
     except Exception as e:
+        print('Printing Blog Details Exception')
         print(e)
     return render(request, 'blog/blog_detail.html', context)
 
@@ -359,36 +372,40 @@ def blogDetail(request, slug):
 def blogPublisher(request, username):
     context={}
     try:
-        user_obj = User.objects.get(username=username)
         if request.user.username == username:
             return redirect(profile)
 
+        user_obj=User.objects.get(username=username)
         blogs = BlogModel.objects.filter(user=user_obj)
         profile_obj = Profile.objects.get(user=user_obj)
         followed=False
-        if profile_obj.follower.filter(id=request.user.id):
+        follow_obj=profile_obj.follower.filter(id=request.user.id).first()
+        if follow_obj:
             followed=True
         else:
             followed=False
         context = {'profile': profile_obj, 'blogs': blogs,'followed':followed}
+        
     except Exception as e:
+        print('Printing Blog Pusblisher Exception')
         print(e)
 
     return render(request, 'blog/public_profile.html', context)
 
 
 def seeBlogs(request):
-    if request.user.is_authenticated:
+    try:
         context = {}
-        try:
+        if request.user.is_authenticated:
             blog_objs = BlogModel.objects.filter(user=request.user).order_by('-id')
             context['blog_objs'] = blog_objs
-        except Exception as e:
-            print(e)
-        return render(request, 'blog/see_blogs.html', context)
-    else:
-        messages.error(request, "Please Login!")
-        return redirect(home)
+            return render(request, 'blog/see_blogs.html', context)
+        else:
+            messages.error(request, "Please Login!")
+            return redirect(home)
+    except Exception as e:
+        print('Printing See blogs Exception')
+        print(e)
 
 
 def updateBlog(request, slug):
@@ -425,6 +442,7 @@ def updateBlog(request, slug):
             context['blog_obj'] = blog_obj
             context['form'] = form
         except Exception as e:
+
             print(e)
         return render(request, 'blog/update_blog.html', context)
     else:
@@ -443,6 +461,7 @@ def deleteBlog(request, slug):
             else:
                 return redirect(home)
         except Exception as e:
+
             print(e)
     else:
         messages.error(request, "Please Login!")
@@ -476,6 +495,7 @@ def search(request):
 
         context['query'] = query
     except Exception as e:
+
         print(e)
 
     return render(request, 'blog/search.html', context)
@@ -504,11 +524,10 @@ def commentAdd(request,slug):
         else:
             messages.error(request,'Please login ! for comment')
     except Exception as e:
+
         print(e)
     return redirect(blogDetail,slug)
 
-def commentUpdate(request):
-    pass
 
 def commentDelete(request,id):
     try:
@@ -524,6 +543,7 @@ def commentDelete(request,id):
         else:
             messages.error(request,'Please login!')
     except Exception as e:
+
         print(e)
     return redirect(blogDetail,comment_obj.blog.slug)
 
@@ -546,6 +566,7 @@ def likePost(request,slug):
         else:
             messages.error(request,'Please Login to like the post!')
     except Exception as e:
+        print('printing like post exction')
         print(e)
     return HttpResponseRedirect(reverse('blog_detail',args=[str(slug)]))
 
@@ -564,5 +585,6 @@ def follow(request):
         else:
             messages.error(request,'Please login!')
     except Exception as e:
+
         print(e)
     return redirect(home)    

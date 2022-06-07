@@ -54,6 +54,8 @@ body{
   }
 }
 
+/* =============PROFILE============== */
+
 .profile-pic {
     width: 100%;
     margin: auto;
@@ -136,8 +138,9 @@ align-items: center;
         to{top:0px}
 }
 
+/* ============COMMENT SECTION================= */
 
-/* Display Comments Section */
+/* Display  Comments */
 
 .c-user-detail{
   display: flex;
@@ -170,7 +173,7 @@ align-items: center;
   position: absolute;
   bottom: 45px;
   right: 15px;
-  /* cursor: pointer; */
+  cursor: pointer;
 }
 
 .comment-action{
@@ -181,7 +184,7 @@ align-items: center;
 }
 
 
-/* Likes Section */
+/* =============LIKE SECTION============== */
 
 .like-btn{
   font-size: 1rem;
@@ -202,6 +205,9 @@ align-items: center;
   background-color: transparent;
   border: none;
 }
+
+/* =================SHARE BLOG SECTION=================== */
+
 .share-div{
   display: flex;
   align-items: center;
