@@ -27,9 +27,9 @@ STATIC_DIRS=os.path.join(BASE_DIR,'static')
 SECRET_KEY = 'django-insecure-deeypapul2n#h@r+kvp7h#_&10154cu-fhbi)kkpse&2qmr*p1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sunil-code-blog.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -139,14 +139,6 @@ AWS_S3_FILE_OVERWRITE=False
 AWS_DEFAULT_ACL=None
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 
-# AWS_S3_OBJECT_PARAMETERES={
-#     'CacheControl':'max-ge=86400'
-# }
-
-
-# AWS_HEADERs={
-#     'Access-Control-Allow-Origin':'*',
-# }
 
 # Static files in AWS
 
