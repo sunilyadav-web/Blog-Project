@@ -124,6 +124,35 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Amazone S3 Settings
+
+AWS_QUERYSTRING_AUTH=False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_ACCESS_KEY_ID='AKIA6OK73NMXLJXTTFOT'
+AWS_S3_SECRET_ACCESS_KEY='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'
+
+AWS_STORAGE_BUCKET_NAME='sunil-code-blog'
+
+AWS_S3_FILE_OVERWRITE=False
+AWS_DEFAULT_ACL=None
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+# AWS_S3_OBJECT_PARAMETERES={
+#     'CacheControl':'max-ge=86400'
+# }
+
+
+# AWS_HEADERs={
+#     'Access-Control-Allow-Origin':'*',
+# }
+
+# Static files in AWS
+
+AWS_LOCATION = 'static'
+STATIC_URL = "https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
