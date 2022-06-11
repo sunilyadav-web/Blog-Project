@@ -1,0 +1,238 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+body{
+  scroll-behavior: smooth;
+}
+/* shadow for navbar */
+.scroll-header {
+    box-shadow: 0 4px 4px hsla(0, 0%, 4%, .3);
+}
+
+/* Login page Style */
+.pass-div {
+  position: relative;
+}
+
+#show-pass {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.login {
+  width: 40%;
+  margin: 0 auto;
+  background-color: #004e4e;
+  padding: 2rem;
+}
+
+.heading {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width:500px) {
+  .login {
+      width: 100%;
+      padding: 2rem 1rem;
+  }
+}
+
+@media screen and (min-device-width: 469px) and (max-device-width: 767px) {
+  .login {
+      width: 80%;
+      padding: 2rem;
+  }
+}
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1069px) {
+  .login {
+      width: 80%;
+      padding: 2rem;
+  }
+}
+
+/* =============PROFILE============== */
+
+.profile-pic {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image {
+    width: 9em;
+    height: 9em;
+
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid rgba(177, 177, 177, 0.334);
+    border-radius: .4em;
+    box-shadow: 0 0 .1em rgba(0, 0, 0, 0.35);
+    position: relative;
+    background-size:cover;
+  }
+
+  .profile-avatar {
+    display: block;
+    text-align: center;
+    width: 100%;
+    object-fit: cover;
+  }
+
+ 
+  .bio p{
+    text-align: justify;
+    line-height: normal;
+  }
+  
+  .bio .bio-header{
+    display: flex;
+justify-content:space-between;
+align-items: center;
+  }
+
+  .follow-btn{
+    background-color: transparent;
+    border: none;
+  }
+  /* ================ Alert============ */
+
+.alert-div{
+    margin-top: 5rem;
+    position: sticky;
+    display: none;
+}
+
+.services__modal {
+    position: fixed;
+    background-color: green;
+    padding: 2rem 1rem;
+    display: grid;
+    place-items: center;
+    transition: .4s;
+
+}
+
+.home{
+    background-image: url(https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+    background-size: cover;
+}
+
+.my-alert{
+    position: relative;
+    margin: auto;
+    animation: alertmove 0.7s ease-in-out;
+    /* opacity: 0; */
+}
+.my-alert div{
+}
+
+@keyframes alertmove {
+        from{top:-50px}
+        to{top:0px}
+}
+
+/* ============COMMENT SECTION================= */
+
+/* Display  Comments */
+
+.c-user-detail{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 50px;
+}
+
+.comment-avatar-div{
+  height: 50px;
+  width: 50px;
+}
+.c-user-detail img{
+  height: 100%;
+  width: 100%;
+}
+.comment-text{
+  line-height:normal;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+
+}
+
+/* update and delete comment */
+
+.update-comment{
+  position: relative;
+}
+.update-comment span{
+  position: absolute;
+  bottom: 45px;
+  right: 15px;
+  cursor: pointer;
+}
+
+.comment-action{
+  background-color: green;
+  width: max-content;
+  padding: 10px 20px;
+  position: absolute;
+}
+
+
+/* =============LIKE SECTION============== */
+
+.like-btn{
+  font-size: 1rem;
+  cursor: pointer;
+}
+.like-btn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  
+}
+.like-btn-color{
+  color: purple;
+}
+
+.-btn{
+  background-color: transparent;
+  border: none;
+}
+
+/* =================SHARE BLOG SECTION=================== */
+
+.share-div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #0000ff54;
+  background-color: #ffffff;
+  border-radius: 1px;
+  padding: 3px 0px;
+}
+.share-btn{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+}
+.share-input{
+  border: none;
+  font-size: 13px;
+  width: 70%;
+}
+
+.copy-btn{
+  background-color: transparent;
+  border: none;
+  text-transform:uppercase; 
+  color: blue;
+  font-size: 1rem;
+}
