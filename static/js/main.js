@@ -43,7 +43,7 @@ window.addEventListener("load", function () {
 state = false
 
 function showpass() {
-    const passInput = document.getElementById('pass')
+    const passInput = document.getElementById('loginPassword')
     const eye = document.getElementById('eye')
     if (state) {
         passInput.setAttribute('type', 'password')
@@ -53,7 +53,7 @@ function showpass() {
     } else {
         eye.classList.add('bx-hide')
         eye.classList.remove('bx-show')
-        passInput.setAttribute('type', 'text')
+        passInput.setAttribute('type','text')
         state = true
     }
 
