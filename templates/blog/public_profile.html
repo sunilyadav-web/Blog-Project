@@ -2,10 +2,9 @@
 
 {% block start %}
 
-<section class="my-5">
-    <div class="profile-div">
-    </div>
-    <div class="profile w-50 m-auto bg-light p-4 rounded w-sm-50">
+<section class="my-5 container-fluid">
+    <div class="row">
+    <div class="profile m-auto bg-light p-4 rounded col-sm-12 col-md-8 col-xl-6">
         <div class="profile-pic text-center mt-2">
             <div class="image text-center ">
                 <img src="{{profile.avatar.url}}" alt="profile image " class="profile-avatar rounded">
@@ -54,6 +53,7 @@
             </div>
         </div>
     </div>
+</div>
 </section>
  
 

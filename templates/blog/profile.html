@@ -2,96 +2,102 @@
 
 {% block start %}
 
-<section class="my-5">
-    <div class="profile-div">
-    </div>
-    <div class="profile w-50 m-auto bg-light p-4 rounded w-sm-50">
-      
-      <small><button class="btn btn-sm btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#profileModal" onclick="editProfile()" >Edit Profile</button></small>
-        <div class="profile-pic text-center mt-2">
-            <div class="image text-center ">
-                <img src="{{profile.avatar.url}}" alt="profile image " class="profile-avatar rounded">
-            </div>
-        </div>
-        <div class="info text-center mt-4 mb-3 ">
-            <h4>{{profile.user.first_name  }} {{profile.user.last_name}}</h4>
-            <p>@{{profile.user.username}}</p>
-        </div>
-        <div class="followers text-end">
-          <span>{{profile.totalFollower}} Followers</span>
-        </div>
-        <div class="bio ">
-            <div class="bio-header">
-                <h5>Bio </h5>
-              
-            </div>
-            <p class="text-muted mx-2">{{profile.bio}}</p>
-        </div>
-        <div class="blogs ">
-            <h5 class="text-center btn bg-warning w-100 mb-5">POSTS </h5>
-            <div class="posts container-fluid">
-                <div class="row align-items-center justify-content-center">
-                    {% for blog in blogs %}
-                <div class="col-12 col-sm-6 mb-2">
-                    <div class="card"><a href="{% url 'blog_detail' blog.slug %}">
-                        <img class="card-img-top" src="{{blog.image.url}}" alt="blog images" style="object-fit:cover ; aspect-ratio: 16/ 9;" /></a>
-                      <div class="px-2">
-                        <span class="d-block"><a class="text-dark text-decoration-none" href="{% url 'blog_detail' blog.slug %}">{{blog.title}} </a></span>
-                        <small class="text-gray-500">12-05-12</small>
-                      </div>
-                    </div>
-                </div>
-                {% endfor %}
-                  </div>
-            </div>
-        </div>
-    </div>
-</section>
- 
+<section class="my-5 container-fluid">
+  <div class="row">
+    <div class="profile m-auto bg-light p-4 rounded col-sm-12 col-md-8 col-xl-6">
 
-<!-- Profile  Modal -->
-  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profilemodalLavel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="profilemodalLavel">Edit Profile</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <small><button class="btn btn-sm btn-outline-dark float-end" data-bs-toggle="modal" data-bs-target="#profileModal"
+          onclick="editProfile()">Edit Profile</button></small>
+      <div class="profile-pic text-center mt-2">
+        <div class="image text-center ">
+          <img src="{{profile.avatar.url}}" alt="profile image " class="profile-avatar rounded">
         </div>
-        <div class="modal-body">
-          <form action="{% url 'profile_update' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="username">
-              </div>
-              <div class="mb-3">
-                <label for="fname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
-              </div>
-              <div class="mb-3">
-                <label for="lname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
-              </div>
-              <div class="mb-3">
-                <label for="profile_pic" class="form-lable">Profile Pic</label>
-                <input type="file" name="avatar" id="profile_pic" class="form-control">
-              </div>
-              <div class="mb-3">
-                <label for="bio" class="form-lable">Add bio</label> <span class='text-danger float-end me-2 d-none' id="bio-error">Bio  Length exceeds</span>
-                <textarea class="form-control "  placeholder="Update your bio" id="bio" onkeyup="countChracters(this.value)" style="height: 90px" name="bio"></textarea>
-                <small class="text-end d-block mb-1 me-2">character <span id="lenght">0</span>/150</small>
-              </div>
-              <div class="mt-2 float-end">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-              </div>
-            </form>
+      </div>
+      <div class="info text-center mt-4 mb-3 ">
+        <h4>{{profile.user.first_name }} {{profile.user.last_name}}</h4>
+        <p>@{{profile.user.username}}</p>
+      </div>
+      <div class="followers text-end">
+        <span>{{profile.totalFollower}} Followers</span>
+      </div>
+      <div class="bio ">
+        <div class="bio-header">
+          <h5>Bio </h5>
+
         </div>
-        
+        <p class="text-muted mx-2">{{profile.bio}}</p>
+      </div>
+      <div class="blogs ">
+        <h5 class="text-center btn bg-warning w-100 mb-5">POSTS </h5>
+        <div class="posts container-fluid">
+          <div class="row align-items-center justify-content-center">
+            {% for blog in blogs %}
+            <div class="col-12 col-sm-6 mb-2">
+              <div class="card"><a href="{% url 'blog_detail' blog.slug %}">
+                  <img class="card-img-top" src="{{blog.image.url}}" alt="blog images"
+                    style="object-fit:cover ; aspect-ratio: 16/ 9;" /></a>
+                <div class="px-2">
+                  <span class="d-block"><a class="text-dark text-decoration-none"
+                      href="{% url 'blog_detail' blog.slug %}">{{blog.title}} </a></span>
+                  <small class="text-gray-500">12-05-12</small>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+</section>
+
+
+<!-- Profile  Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profilemodalLavel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="profilemodalLavel">Edit Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'profile_update' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="username">
+          </div>
+          <div class="mb-3">
+            <label for="fname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name">
+          </div>
+          <div class="mb-3">
+            <label for="lname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="profile_pic" class="form-lable">Profile Pic</label>
+            <input type="file" name="avatar" id="profile_pic" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="bio" class="form-lable">Add bio</label> <span class='text-danger float-end me-2 d-none'
+              id="bio-error">Bio Length exceeds</span>
+            <textarea class="form-control " placeholder="Update your bio" id="bio" onkeyup="countChracters(this.value)"
+              style="height: 90px" name="bio"></textarea>
+            <small class="text-end d-block mb-1 me-2">character <span id="lenght">0</span>/150</small>
+          </div>
+          <div class="mt-2 float-end">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}
