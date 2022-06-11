@@ -1,4 +1,3 @@
-from tkinter import E
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from .form import *
