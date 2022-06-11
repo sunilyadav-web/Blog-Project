@@ -283,7 +283,10 @@ def profileUpdate(request):
                         token=generate_random_string(20)
                         profile_obj.token=token
                         profile_obj.save()
-                        status=sendMailForEmailVerification(token,email,current_site.domain)
+                        domain_name=current_site.domain
+                        print(domain_name)
+                        
+                        status=sendMailForEmailVerification(token,email,domain_name)
                         if status == 'success':
                             messages.success(request,"Please Check your Email to verify eamil")
                             user.email=email
