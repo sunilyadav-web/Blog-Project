@@ -121,8 +121,8 @@ def register(request):
 
                     token=generate_random_string(20)
                     Profile.objects.create(user=user_obj,token=token)
-                    current_site=get_current_site(request)
-                    send_mail_to_user(token,email,current_site.domain)
+                    domain_name='https://sunil-code-blog.herokuapp.com/'
+                    send_mail_to_user(token,email,domain_name)
                     messages.success(request,'User Created sucessfully! Please check your email in order to activate your account')
                     return redirect(home)
     except Exception as e:
@@ -169,12 +169,12 @@ def forgetPassword(request):
             if not user_obj:
                 messages.error(request,'Please Enter Your verified Email')
                 return redirect(forgetPassword)
-            current_site=get_current_site(request)
             token=generate_random_string(20)
             profile_obj=Profile.objects.get(user=user_obj)
             profile_obj.token=token
             profile_obj.save()
-            status=send_forget_email(token,email,current_site.domain)
+            domain_name='https://sunil-code-blog.herokuapp.com/'
+            status=send_forget_email(token,email,domain_name)
             if status =='success':
                 messages.success(request,'We have sent you email. Please check that out! ')
             
@@ -279,11 +279,10 @@ def profileUpdate(request):
 
                 if email:
                     if not user.email == email :
-                        current_site=get_current_site(request)
                         token=generate_random_string(20)
                         profile_obj.token=token
                         profile_obj.save()
-                        domain_name=current_site.domain
+                        domain_name='https://sunil-code-blog.herokuapp.com/'
                         print(domain_name)
                         
                         status=sendMailForEmailVerification(token,email,domain_name)

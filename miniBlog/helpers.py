@@ -22,15 +22,15 @@ def generate_slug(text):
     
 def send_mail_to_user(token,email,domain):
     subject="Your account need to be verified"
-    message="Hi paste the link to verify account http://"+domain+"verify/"+token
+    message="Hi paste the link to verify account "+domain+"verify/"+token
     from_email=settings.EMAIL_HOST_USER
     recipient_list=[email]
     send_mail(subject,message,from_email,recipient_list, fail_silently=True)
 
 def send_forget_email(token,email,domain):
     status='Error'
-    subject="Please Click on link blow to foreget password"
-    message="Please Clink on this link to forget password page http://"+domain+"set-new-password/"+token
+    subject="Welcome to Sunil Code Blog /n Please Click on link blow to foreget password"
+    message="Please Clink on this link to forget password page "+domain+"set-new-password/"+token
     from_email=settings.EMAIL_HOST_USER
     recipient_list=[email]
     send_mail(subject,message,from_email,recipient_list,fail_silently=True)
@@ -38,8 +38,8 @@ def send_forget_email(token,email,domain):
     return status
 def sendMailForEmailVerification(token,email,domain):
     status='error'
-    subject='Please Verify your Email by clicking link below'
-    message="Click here to verify email http://"+domain+"email-verify/"+token
+    subject='Welcome to Sunil Code Blog Email Varification'
+    message="Click here to verify email "+domain+"email-verify/"+token
     from_email=settings.EMAIL_HOST_USER
     recipient_list=[email]
     send_mail(subject,message,from_email,recipient_list,fail_silently=True)
