@@ -375,17 +375,17 @@ def blogPublisher(request, username):
     try:
         if request.user.username == username:
             return redirect(profile)
-
-        user_obj=User.objects.get(username=username)
-        blogs = BlogModel.objects.filter(user=user_obj)
-        profile_obj = Profile.objects.get(user=user_obj)
-        followed=False
-        follow_obj=profile_obj.follower.filter(id=request.user.id).first()
-        if follow_obj:
-            followed=True
         else:
+            user_obj=User.objects.get(username=username)
+            blogs = BlogModel.objects.filter(user=user_obj)
+            profile_obj = Profile.objects.get(user=user_obj)
             followed=False
-        context = {'profile': profile_obj, 'blogs': blogs,'followed':followed}
+            follow_obj=profile_obj.follower.filter(id=request.user.id).first()
+            if follow_obj:
+                followed=True
+            else:
+                followed=False
+            context = {'profile': profile_obj, 'blogs': blogs,'followed':followed}
         
     except Exception as e:
         print('Printing Blog Pusblisher Exception')
