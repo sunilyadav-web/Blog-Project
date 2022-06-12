@@ -14,17 +14,19 @@ def home(request):
     context={}
     try:
         blogs = BlogModel.objects.all().order_by('-id')
-        allblogs=BlogModel.objects.annotate(Count('likes'))
-        maxlist=[]        
-        for blog in allblogs:
-            maxlist.append(blog.likes__count)
+        try:
+            allblogs=BlogModel.objects.annotate(Count('likes'))
+            maxlist=[]        
+            for blog in allblogs:
+                maxlist.append(blog.likes__count)
 
-        for blog in allblogs:
-            if max(maxlist) == blog.likes__count:
-                featured=blog
-                break
-        
-        featured_blog=featured
+            for blog in allblogs:
+                if max(maxlist) == blog.likes__count:
+                    featured=blog
+                    break
+            featured_blog=featured
+        except:
+            pass
         paginator = Paginator(blogs, 3)
         pages = paginator.page_range
         pageNumber = request.GET.get('page')
