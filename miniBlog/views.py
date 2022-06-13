@@ -32,12 +32,13 @@ def home(request):
         pageNumber = request.GET.get('page')
         finalBlogpage = paginator.get_page(pageNumber)
         context = {'blogs': finalBlogpage, 'pages': pages, 'featured_blog':featured_blog}
-        profile = Profile.objects.get(user=request.user)
-        verify = profile.is_varified
-        if not verify:
-            messages.warning(request, 'Please verify your Account!')
-        if not profile.is_email_varified:
-            messages.warning(request,'Please Verify your Email')
+        if request.user.is_authenticated:
+            profile = Profile.objects.get(user=request.user)
+            verify = profile.is_varified
+            if not verify:
+                messages.warning(request, 'Please verify your Account!')
+            if not profile.is_email_varified:
+                messages.warning(request,'Please Verify your Email')
     except Exception as e:
         print('Printing Home Exception')
         print(e)
