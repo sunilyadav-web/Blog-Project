@@ -368,7 +368,6 @@ def blogDetail(request, slug):
         context={'blog_obj':blog_obj}
         context['comments_obj'] = comments_obj
         context['liked'] = liked
-        print(context)
     except Exception as e:
         print('Printing Blog Details Exception')
         print(e)
