@@ -355,17 +355,19 @@ def addBlog(request):
 def blogDetail(request, slug):
     context = {}
     try:
-        blog_obj = BlogModel.objects.filter(slug=slug).first()
+        # blog_obj = BlogModel.objects.filter(slug=slug).first()
+        blog_obj=BlogModel.objects.get(slug=slug)
+        
         comments_obj=CommentModel.objects.filter(blog=blog_obj)
         liked=False
-        if blog_obj.likes.filter(id=request.user.id).exists():
+        if blog_obj.likes.filter(id=request.user.id):
             liked=True
         else:
             liked=False
-        context['blog_obj'] = blog_obj
+        context={'blog_obj':blog_obj}
         context['comments_obj'] = comments_obj
         context['liked'] = liked
-        
+        print(context)
     except Exception as e:
         print('Printing Blog Details Exception')
         print(e)
