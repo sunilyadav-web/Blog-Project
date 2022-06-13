@@ -14,6 +14,9 @@
         <div class="text-content text-justify">
           {{blog_obj.content | safe}}
         </div>
+        <div class="publish-date text-start mb-3">
+          <small class="opacity-75">Published At : <span>{{blog_obj.upload_to |date}}</span></small>
+        </div>
         <div class="like-and-share-section d-flex align-items-center">
             <form action="{% url 'post_like' blog_obj.slug %}" method="post">
               {% csrf_token %}
@@ -33,7 +36,7 @@
               <button type="button" class="share-btn" data-bs-toggle="modal" data-bs-target="#share" onclick="getLink()">
                 <i class='bx bx-share'></i>
               </button>
-            </div>
+            </div> 
             <!-- comment icon -->
               <!-- <i class='bx bxs-comment'></i> -->
         </div>
