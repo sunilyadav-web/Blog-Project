@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/',include('miniBlog.urls_api')),
     
 ]
+handler404="miniBlog.views.page_not_found_view"
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

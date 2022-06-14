@@ -9,7 +9,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from .helpers import *
 from django.db.models import Max, Count
 
-
+# 404 Not found page function 
+def page_not_found_view(request,exception):
+    return render(request,'blog/404_not_found.html',status=404)
+    
 def home(request):
     context={}
     try:
