@@ -47,7 +47,9 @@ def home(request):
         print(e)
     return render(request, 'blog/home.html', context)
 
-
+def about(request):
+    return render(request,'blog/about.html')
+    
 def signin(request):
     try:
         if request.user.is_authenticated:

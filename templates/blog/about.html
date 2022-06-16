@@ -1,0 +1,128 @@
+{% extends './base.html' %}
+{% block  start%}
+  <header class="text-center my-3">
+    <h2>About this Blog Project</h2>
+  </header>
+  <main class="container mb-5">
+    <div class="project-title mb-3">
+      <h6>Title - Sunil Code Blog</h6>
+    </div>
+    <div class="project-description row">
+      <h6>Description</h6>
+      <div class="col-sm-6 col-12">
+      <p class=" text-justify">This is a blogging platform project, which is built-in Python Django and Rest API. We
+        have two main sections User and Blog Model.</p>
+      </div>
+    </div>
+    <div class="implementation">
+      <h5>What's in this Project and How it works</h5>
+      <div class="ps-3">
+        <h6>About User System</h6>
+        <ul type="square">
+          <li>Register or Login</li>
+          <li>Activating user account via Email Verification link</li>
+          <li>Profile Section</li>
+          <li>User can edit Profile</li>
+          <li>can't add more than 150 character in bio (this is counting by Js and disable edit form if more than 150)</li>
+          <li>Change Eamil- if user change his email then our system verify that with email verification link (It show warning if not verify</li>
+          <li>Display user's followers ( how Many other users followed him)</li>
+          <li>Display all blog post that user only had posted</li>
+          <li>user can follow and unfollow users</li>
+          <li>user can see other users profile</li>
+        </ul>
+      </div>
+      <div class="ps-3">
+        <h6>About Blog</h6>
+        <ul type="square">
+          <li>User can add blogs (if user account is not activate can't add blog) *Activating Account</li>
+          <li>Edit blogs</li>
+          <li>Delete blogs</li>
+          <li>users can Like or unlike blogs</li>
+          <li>user can seen all thier blogs list table</li>
+          <li>users can comment on the blog and they can edit thier comment and delete.</li>
+          <li>Edit comment functionality performed by Django Rest API</li>
+          <li>most liked blog will display in featured blog window</li>
+          <li>Displaying blogs in form of cards</li>
+          <li>What display in blog cards
+            <ul type="disc">
+              <li>Blog Image with hyper link of full blog detail</li>
+              <li>Blog publisher username with hyper link of his profile</li>
+              <li>Blog publish date and link of full blog detail</li>
+            </ul>
+          </li>
+          <li>Provide froala editor to write blog conent</li>
+          <li>user can share blog by share button link </li>
+        </ul>
+      </div>
+      <div class="ps-3">
+        <h6>About other Features</h6>
+        <ul type="square">
+          <li>Search blogs functionality
+            <ul type="disc">
+              <li>Search blog will display after matching searched keyword in blog title and blog content</li>
+              <li>search will give error if search query length greater than specified query length</li>
+              <li>if search keyword not match with any blogs content and title it will simply show you seggestions and warning</li>
+              <li>It will show all the blogs that match with your keyword</li>
+            </ul>
+          </li>
+          <li>Pagination with next and previous button and you can also go on specific page by clicking on page number</li>
+        </ul>
+      </div>
+    </div>
+    <div class="">
+      <h5>🛠️ Used Tool and Techonlogy</h5>
+      <div class="ps-3">
+        <h6>Front-end</h6>
+        <ul type="square">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>Bootstrap</li>
+        </ul>
+      </div>
+      <div class="ps-3">
+        <h6>Back-end</h6>
+        <ul type="square">
+          <li>Python</li>
+          <li>Django Framework</li>
+          <li>Django Rest Framework</li>
+        </ul>
+      </div>
+      <div class="ps-3">
+        <h6>Database</h6>
+        <ul type="square">
+          <li>PostgreSQL</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h5>🚀 Deployment</h5>
+      <div class="ps-3">
+        <h6>Application running And Database</h6>
+        <ul type="square">
+          <li>Its running on Heroku Platform</li>
+          <li>Its free off cost hosted on Heroku</li>
+          <li>Database stored on AWS in Relational Database System (free off cost)</li>
+        </ul>
+      </div>
+      <div class="ps-3">
+        <h6>Static and Media Files</h6>
+        <ul type="square">
+          <li>Stored static and media files in AWS s3 bucket</li>
+          <li>using free service</li>
+        </ul>
+      </div>
+    </div>
+    <p>
+      I hope you guy's like this proejct ❤ Please don't forget to share feedback on Linkedin
+    </p>
+  <div>
+   <h6>Connect with me</h6> 
+    <a target="_blank" href="https://sunilyadav.netlify.app/" class="text-decoration-none  btn btn-sm btn-warning">My Website</a>
+    <a target="_blank" href="https://www.linkedin.com/in/sunilyadavcode/" class="text-decoration-none  btn btn-sm btn-primary">Linkedin</a>
+    <a target="_blank" href="https://github.com/sunilyadav-web" class="text-decoration-none btn btn-sm btn-dark ">GitHub</a>
+    <a target="_blank" href="https://twitter.com/sunilcode" class="text-decoration-none btn btn-sm btn-primary">Twitter</a>
+
+  </div>
+  </main>
+  {% endblock  %}
